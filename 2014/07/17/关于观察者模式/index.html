@@ -1,0 +1,389 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>关于观察者模式 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="观察者模式，保证主题和若干观察者之间的一致性
+概述有时又被称为发布-订阅Subscribe&amp;gt;模式、模型-视图View&amp;gt;模式、源-收听者Listener&amp;gt;模式或从属者模式
+此种模式通常被用来实现事件处理系统">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/07/17/关于观察者模式/" title="关于观察者模式" itemprop="url">关于观察者模式</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-07-16T17:59:11.000Z" itemprop="datePublished">Jul 17 2014</time>
+    更新日期:<time datetime="2014-08-13T09:00:06.000Z" itemprop="dateModified">Aug 13 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特定环境"><span class="toc-number">2.</span> <span class="toc-text">特定环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一类问题"><span class="toc-number">3.</span> <span class="toc-text">一类问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">4.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象主题角色"><span class="toc-number">4.1.</span> <span class="toc-text">抽象主题角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体主题角色"><span class="toc-number">4.2.</span> <span class="toc-text">具体主题角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象观察者角色"><span class="toc-number">4.3.</span> <span class="toc-text">抽象观察者角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体观察者角色"><span class="toc-number">4.4.</span> <span class="toc-text">具体观察者角色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推模型和拉模型"><span class="toc-number">5.</span> <span class="toc-text">推模型和拉模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#两种实现方式的比较"><span class="toc-number">6.</span> <span class="toc-text">两种实现方式的比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_中的_Observer_接口_和_Observable_类"><span class="toc-number">7.</span> <span class="toc-text">Java 中的 Observer 接口 和 Observable 类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">8.</span> <span class="toc-text">参考</span></a></li></ol>
+		</div>
+		
+		<p>观察者模式，保证主题和若干观察者之间的一致性</p>
+<h2 id="概述">概述</h2><p>有时又被称为发布-订阅Subscribe&gt;模式、模型-视图View&gt;模式、源-收听者Listener&gt;模式或从属者模式</p>
+<p>此种模式通常被用来实现事件处理系统</p>
+<a id="more"></a>
+<h2 id="特定环境">特定环境</h2><blockquote>
+<ul>
+<li>一个对象改变，同时引发其他若干对象发生变化时</li>
+<li>主动改变的对象和被动变化的对象之间相对独立，以便复用和维护</li>
+</ul>
+</blockquote>
+<h2 id="一类问题">一类问题</h2><p>一个系统，由一个对象和若干协作对象组成，同时要避免这些对象之间相互耦合</p>
+<h2 id="解决方案">解决方案</h2><blockquote>
+<ul>
+<li>抽象主题角色</li>
+<li>具体主题角色</li>
+<li>抽象观察者角色</li>
+<li>具体观察者角色</li>
+</ul>
+</blockquote>
+<h3 id="抽象主题角色">抽象主题角色</h3><p>一般由接口或抽象类实现</p>
+<p>注册有若干抽象观察者的引用集</p>
+<p>同时，能够增删抽象观察者，并在自身发生改变时，通知观察者作出相应变化</p>
+<h3 id="具体主题角色">具体主题角色</h3><p>一般由具体子类实现抽象主题角色，具有自己的状态</p>
+<h3 id="抽象观察者角色">抽象观察者角色</h3><p>一般由接口或抽象类实现</p>
+<p>为所有具体观察者定义行为规范</p>
+<p>并定义方法，接收通知并更新自身状态</p>
+<h3 id="具体观察者角色">具体观察者角色</h3><p>一般由具体子类实现抽象观察者角色，具有自己的状态，随主题状态变化而变化</p>
+<h2 id="推模型和拉模型">推模型和拉模型</h2><p>在观察者模式中，又分为：</p>
+<blockquote>
+<ul>
+<li>推模型<br>主题对象向观察者推送主题的详细信息，不管观察者是否需要，推送的信息通常是主题对象的全部或部分数据。</li>
+<li>拉模型<br>主题对象在通知观察者的时候，只传递少量信息<br>如果观察者需要更具体的信息，由观察者主动到主题对象中获取，相当于是观察者从主题对象中拉数据<br>一般这种模型的实现中，会把主题对象自身通过 update 方法传递给观察者<br>这样在观察者需要获取数据的时候，就可以通过这个引用来获取了</li>
+</ul>
+</blockquote>
+<h2 id="两种实现方式的比较">两种实现方式的比较</h2><blockquote>
+<ul>
+<li><p>推模型是假定主题对象知道观察者需要的数据；<br>而拉模型是主题对象不知道观察者具体需要什么数据，没有办法的情况下，干脆把自身传递给观察者，让观察者自己去按需要取值</p>
+</li>
+<li><p>推模型可能会使得观察者对象难以复用，因为观察者的 update方法 是按需要定义的参数，可能无法兼顾没有考虑到的使用情况。这就意味着出现新情况的时候，就可能提供新的update方法，或者是干脆重新实现观察者；<br>而拉模型就不会造成这样的情况，因为拉模型下，update 方法的参数是主题对象本身，这基本上是主题对象能传递的最大数据集合了，基本上可以适应各种情况的需要</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="Java_中的_Observer_接口_和_Observable_类">Java 中的 Observer 接口 和 Observable 类</h2><p>Observer 接口 ：观察者</p>
+<p>Observable 类 ： 主题，即被观察者</p>
+<p>通过继承或实现它们，可以快速实现观察者模式，并且线程安全</p>
+<p>另外，这两个类型使用的是 拉模型</p>
+<h2 id="参考">参考</h2><p><a href="http://www.cnblogs.com/java-my-life/archive/2012/05/16/2502279.html" target="_blank" rel="external">《JAVA与模式》之观察者模式</a>，作者： java_my_life</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/observer/">observer</a><a href="/tags/pattern/">pattern</a><a href="/tags/subject/">subject</a><a href="/tags/设计模式/">设计模式</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/07/17/关于观察者模式/" data-title="关于观察者模式 | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/07/17/关于命令者模式/" title="关于命令者模式">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于命令者模式</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/16/关于代理模式2（转）/"  title="关于代理模式2（转）">
+ <strong>NEXT:</strong><br/> 
+ <span>关于代理模式2（转）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特定环境"><span class="toc-number">2.</span> <span class="toc-text">特定环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一类问题"><span class="toc-number">3.</span> <span class="toc-text">一类问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">4.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象主题角色"><span class="toc-number">4.1.</span> <span class="toc-text">抽象主题角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体主题角色"><span class="toc-number">4.2.</span> <span class="toc-text">具体主题角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#抽象观察者角色"><span class="toc-number">4.3.</span> <span class="toc-text">抽象观察者角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#具体观察者角色"><span class="toc-number">4.4.</span> <span class="toc-text">具体观察者角色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推模型和拉模型"><span class="toc-number">5.</span> <span class="toc-text">推模型和拉模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#两种实现方式的比较"><span class="toc-number">6.</span> <span class="toc-text">两种实现方式的比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_中的_Observer_接口_和_Observable_类"><span class="toc-number">7.</span> <span class="toc-text">Java 中的 Observer 接口 和 Observable 类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">8.</span> <span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

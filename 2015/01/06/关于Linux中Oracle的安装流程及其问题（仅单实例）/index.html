@@ -1,0 +1,621 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>关于Linux中Oracle的安装流程及其问题（仅单实例） | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="Linux中安装Oracle，不同于windows。Linux在安装时，要作些必要的分区配置，以便进行Oracle的安装；同时需要创建专门的数据库用户和组，并配置环境变量">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/01/06/关于Linux中Oracle的安装流程及其问题（仅单实例）/" title="关于Linux中Oracle的安装流程及其问题（仅单实例）" itemprop="url">关于Linux中Oracle的安装流程及其问题（仅单实例）</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-01-06T08:19:46.000Z" itemprop="datePublished">Jan 6 2015</time>
+    更新日期:<time datetime="2015-01-06T09:29:46.000Z" itemprop="dateModified">Jan 6 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#root登录"><span class="toc-number">1.</span> <span class="toc-text">root登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查和配置环境"><span class="toc-number">2.</span> <span class="toc-text">检查和配置环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#检查环境"><span class="toc-number">2.1.</span> <span class="toc-text">检查环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置环境"><span class="toc-number">2.2.</span> <span class="toc-text">配置环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Oracle软件"><span class="toc-number">3.</span> <span class="toc-text">安装Oracle软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#命令行操作"><span class="toc-number">3.1.</span> <span class="toc-text">命令行操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图形化界面安装"><span class="toc-number">3.2.</span> <span class="toc-text">图形化界面安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建数据库实例"><span class="toc-number">4.</span> <span class="toc-text">创建数据库实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置监听和本地网络服务"><span class="toc-number">5.</span> <span class="toc-text">配置监听和本地网络服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#额外配置"><span class="toc-number">6.</span> <span class="toc-text">额外配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_dbstart_和_dbshut_来启动/关闭数据库"><span class="toc-number">6.1.</span> <span class="toc-text">使用 dbstart 和 dbshut 来启动/关闭数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Oracle自动启动"><span class="toc-number">6.2.</span> <span class="toc-text">Oracle自动启动</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>Linux中安装Oracle，不同于windows。<br>Linux在安装时，要作些必要的分区配置，以便进行Oracle的安装；<br>同时需要创建专门的数据库用户和组，并配置环境变量</p>
+<a id="more"></a>
+<h2 id="root登录">root登录</h2><pre><code>使用 root 来配置 Oracle 环境
+其中<span class="keyword">*</span><span class="keyword">*</span>检查环境<span class="keyword">*</span><span class="keyword">*</span>部分，需要在安装 Oracle
+</code></pre><h2 id="检查和配置环境">检查和配置环境</h2><h3 id="检查环境">检查环境</h3><p>1、swap空间    </p>
+<pre><code><span class="comment"># swap 空间大小，应满足以下条件</span>
+<span class="comment"># 内存 1~2 G，swap 空间大小应为2倍内存</span>
+<span class="comment"># 内存 2~16 G, swap 空间大小等同于内存</span>
+<span class="comment"># 内存 &gt; 16 G，swap 空间大小为 16 G</span>
+grep <span class="type">MemTotal</span>  /<span class="keyword">proc</span>/meminfo
+</code></pre><p>2、空闲硬盘</p>
+<pre><code><span class="preprocessor"># Oracle 企业版或标准版，需要至少约 4G 安装空间，约 2G 数据文件空间</span>
+<span class="preprocessor"># /tmp 空间信息</span>
+df -h /tmp
+<span class="preprocessor"># 各个磁盘空间信息</span>
+df -h
+</code></pre><h3 id="配置环境">配置环境</h3><p>1、需安装软件包（以 RHEL 6 为例）</p>
+<p>以下软件包可能已安装，另 x86_64 为 64 位，i686 为 32 位<br>注意，早期的 32 位包后缀是 i386<br>若在其后图形化安装的检查中，提示某些包未安装，可能是 Oracle 安装检查不能识别部分 i686 的文件（<strong>已安装</strong>）</p>
+<pre><code>binutils-<span class="number">2.20</span>.<span class="number">51.0</span>.<span class="number">2</span>-<span class="number">5.11</span><span class="class">.el6</span> (x86_64)
+compat-libcap1-<span class="number">1.10</span>-<span class="number">1</span> (x86_64)
+compat-libstdc++-<span class="number">33</span>-<span class="number">3.2</span>.<span class="number">3</span>-<span class="number">69</span><span class="class">.el6</span> (x86_64)
+compat-libstdc++-<span class="number">33</span>-<span class="number">3.2</span>.<span class="number">3</span>-<span class="number">69</span><span class="class">.el6</span> (i686)
+gcc-<span class="number">4.4</span>.<span class="number">4</span>-<span class="number">13</span><span class="class">.el6</span> (x86_64)
+gcc-c++-<span class="number">4.4</span>.<span class="number">4</span>-<span class="number">13</span><span class="class">.el6</span> (x86_64)
+glibc-<span class="number">2.12</span>-<span class="number">1.7</span><span class="class">.el6</span> (i686)
+glibc-<span class="number">2.12</span>-<span class="number">1.7</span><span class="class">.el6</span> (x86_64)
+glibc-devel-<span class="number">2.12</span>-<span class="number">1.7</span><span class="class">.el6</span> (x86_64)
+glibc-devel-<span class="number">2.12</span>-<span class="number">1.7</span><span class="class">.el6</span> (i686)
+ksh
+libgcc-<span class="number">4.4</span>.<span class="number">4</span>-<span class="number">13</span><span class="class">.el6</span> (i686)
+libgcc-<span class="number">4.4</span>.<span class="number">4</span>-<span class="number">13</span><span class="class">.el6</span> (x86_64)
+libstdc++-<span class="number">4.4</span>.<span class="number">4</span>-<span class="number">13</span><span class="class">.el6</span> (x86_64)
+libstdc++-<span class="number">4.4</span>.<span class="number">4</span>-<span class="number">13</span><span class="class">.el6</span> (i686)
+libstdc++-devel-<span class="number">4.4</span>.<span class="number">4</span>-<span class="number">13</span><span class="class">.el6</span> (x86_64)
+libstdc++-devel-<span class="number">4.4</span>.<span class="number">4</span>-<span class="number">13</span><span class="class">.el6</span> (i686)
+libaio-<span class="number">0.3</span>.<span class="number">107</span>-<span class="number">10</span><span class="class">.el6</span> (x86_64)
+libaio-<span class="number">0.3</span>.<span class="number">107</span>-<span class="number">10</span><span class="class">.el6</span> (i686)
+libaio-devel-<span class="number">0.3</span>.<span class="number">107</span>-<span class="number">10</span><span class="class">.el6</span> (x86_64)
+libaio-devel-<span class="number">0.3</span>.<span class="number">107</span>-<span class="number">10</span><span class="class">.el6</span> (i686)
+libXext-<span class="number">1.1</span> (x86_64)
+libXext-<span class="number">1.1</span> (i686)
+libXtst-<span class="number">1.0</span>.<span class="number">99.2</span> (x86_64)
+libXtst-<span class="number">1.0</span>.<span class="number">99.2</span> (i686)
+libX11-<span class="number">1.3</span> (x86_64)
+libX11-<span class="number">1.3</span> (i686)
+libXau-<span class="number">1.0</span>.<span class="number">5</span> (x86_64)
+libXau-<span class="number">1.0</span>.<span class="number">5</span> (i686)
+libxcb-<span class="number">1.5</span> (x86_64)
+libxcb-<span class="number">1.5</span> (i686)
+libXi-<span class="number">1.3</span> (x86_64)
+libXi-<span class="number">1.3</span> (i686) 
+make-<span class="number">3.81</span>-<span class="number">19</span><span class="class">.el6</span>
+sysstat-<span class="number">9.0</span>.<span class="number">4</span>-<span class="number">11</span><span class="class">.el6</span> (x86_64)
+</code></pre><h2 id="安装Oracle软件">安装Oracle软件</h2><h3 id="命令行操作">命令行操作</h3><p>1、配置 Oracle 用户和组</p>
+<pre><code><span class="preprocessor"># 创建组</span>
+groupadd oinstall
+<span class="preprocessor"># 创建 OSDBA 组</span>
+groupadd dba
+<span class="preprocessor"># 创建 Oracle 用户</span>
+useradd –g oinstall –G dba oracle
+<span class="preprocessor"># 修改Oracle 密码</span>
+passwd oracle
+</code></pre><p>2、配置系统内核参数</p>
+<pre><code><span class="keyword">vim</span> /etc/sysctl.<span class="keyword">conf</span>
+</code></pre><p>添加以下内容：</p>
+<pre><code>fs.<span class="variable">aio-max-nr =</span> <span class="number">1048576</span>
+<span class="comment"># 该参数表示文件句柄的最大数量</span>
+<span class="comment"># 文件句柄设置表示在linux系统中可以打开的文件数# 量</span>
+fs.<span class="variable">file-max =</span> <span class="number">6815744</span>
+<span class="comment"># 该参数表示系统一次可以使用的共享内存总量（以页为单位）。缺省值就是2097152</span>
+<span class="comment"># 通常不需要修改</span>
+kernel.<span class="variable">shmall =</span> <span class="number">524288</span>
+<span class="comment"># 系统共享内存大小优化</span>
+kernel.<span class="variable">shmmax =</span> <span class="number">524288</span>
+<span class="comment"># 这个内核参数用于设置系统范围内共享内存段的最大数量。该参数的默认值是4096 # 通常不需要更改</span>
+kernel.<span class="variable">shmmni =</span> <span class="number">4096</span>  
+kernel.<span class="variable">sem =</span> <span class="number">250</span> <span class="number">32000</span> <span class="number">100</span> <span class="number">128</span>
+<span class="comment">#表示用于向外连接的端口范围。缺省情况下很小：32768到61000，改为1024到65000</span>
+net.ipv4.<span class="variable">ip_local_port_range =</span> <span class="number">9000</span> <span class="number">65500</span>
+<span class="comment"># 默认的TCP/IP接收缓冲大小</span>
+net.core.<span class="variable">rmem_default =</span> <span class="number">262144</span>
+<span class="comment"># 最大socket读buffer,可参考的优化值:873200 </span>
+net.core.<span class="variable">rmem_max =</span> <span class="number">4194304</span>
+<span class="comment"># 默认的TCP/IP发送窗口大小</span>
+net.core.<span class="variable">wmem_default =</span> <span class="number">262144</span>
+<span class="comment"># 最大socket写buffer,可参考的优化值:873200</span>
+net.core.<span class="variable">wmem_max =</span> <span class="number">1048586</span>
+</code></pre><p>使修改后系统内核参数立即生效：</p>
+<pre><code><span class="title">sysctl</span> -p
+</code></pre><p>3、配置 Oracle 用户资源限制</p>
+<pre><code><span class="keyword">vi</span> /etc/security/limits.<span class="keyword">conf</span>
+</code></pre><p>在其后增加以下内容：</p>
+<pre><code>oracle              <span class="keyword">soft</span>    nproc   <span class="number">2047</span>  
+oracle              hard    nproc   <span class="number">16384</span>  
+oracle              <span class="keyword">soft</span>    nofile  <span class="number">1024</span>  
+oracle              hard    nofile  <span class="number">65536</span>  
+oracle              <span class="keyword">soft</span>    stack   <span class="number">10240</span>  
+</code></pre><p>4、配置 Oracle 相关目录</p>
+<pre><code>mkdir -p <span class="regexp">/home/</span>oracle_11<span class="regexp">/app/</span>
+chown -R <span class="string">oracle:</span>oinstall <span class="regexp">/home/</span>oracle_11<span class="regexp">/app/</span> 
+chown -R <span class="string">oracle:</span>oinstall <span class="regexp">/home/</span>oracle_11
+chmod -R <span class="number">775</span> <span class="regexp">/home/</span>oracle_11<span class="regexp">/app/</span>
+</code></pre><p>5、配置 Oracle 用户环境</p>
+<pre><code>vim <span class="regexp">/home/oracle/</span>.bash_profile
+</code></pre><p>在该文件后增加以下内容：</p>
+<pre><code><span class="built_in">umask</span> <span class="number">022</span>  
+<span class="built_in">export</span> ORACLE_BASE=/home/oracle_11/app  
+<span class="built_in">export</span> ORACLE_HOME=<span class="variable">$ORACLE_BASE</span>/oracle/product/<span class="number">11.2</span>.<span class="number">0</span>/db_1  
+<span class="built_in">export</span> ORACLE_SID=orcl     
+<span class="comment"># Oracle实例名，可修改  </span>
+<span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:HOME/bin:<span class="variable">$ORACLE_HOME</span>/bin
+</code></pre><p>login：登陆配置文件<br>附：etc指的系统配置文件目录，pam.d指的是验证登陆配置</p>
+<pre><code>vim <span class="regexp">/etc/</span>pam.d<span class="regexp">/login</span>
+</code></pre><p>在该文件中，增加以下内容：</p>
+<pre><code>session required /lib/security/pam_limits<span class="class">.so</span>  
+session required pam_limits<span class="class">.so</span> 
+</code></pre><p>profile：配置环境变量，对所有用户有效</p>
+<pre><code><span class="keyword">vim</span> /etc/<span class="keyword">profile</span>
+</code></pre><p>在该文件后，增加以下内容：</p>
+<pre><code><span class="keyword">if</span> [ <span class="variable">$USER</span> = <span class="string">"oracle"</span> ]; <span class="keyword">then</span>  
+    <span class="keyword">if</span> [ <span class="variable">$SHELL</span> = <span class="string">"/bin/ksh"</span> ]; <span class="keyword">then</span>  
+        <span class="built_in">ulimit</span> -p <span class="number">16384</span>  
+        <span class="built_in">ulimit</span> -n <span class="number">65536</span>  
+    <span class="keyword">else</span>  
+        <span class="built_in">ulimit</span> -u <span class="number">16384</span> -n <span class="number">65536</span>  
+    <span class="keyword">fi</span>  
+<span class="keyword">fi</span>
+</code></pre><p>6、配置 Oraclle 用户图形化界面展示</p>
+<p>查看 oracle 用户是否已设置 DISPLAY 变量</p>
+<pre><code><span class="built_in">echo</span> <span class="variable">$DISPLAY</span>
+</code></pre><p>若为空，则在 oracle 用户目录下的 .bash_profile 中增加如下内容：</p>
+<pre><code><span class="label">DISPLAY:</span>=<span class="number">0.0</span>
+</code></pre><p>注：0.0表示使用本地机器界面</p>
+<h3 id="图形化界面安装">图形化界面安装</h3><p>1、准备</p>
+<p>附：lrzsz 安装过程</p>
+<pre><code>yum <span class="operator"><span class="keyword">install</span> lrzsz
+<span class="keyword">ln</span> -s /usr/<span class="keyword">local</span>/lrzsz/<span class="keyword">bin</span>/lrz rz
+<span class="keyword">ln</span> -s /usr/<span class="keyword">local</span>/lrzsz/<span class="keyword">bin</span>/lsz sz</span>
+</code></pre><p>使用 secureCRT，root登录（一般安装软件都是用管理员权限）</p>
+<pre><code>rz –<span class="keyword">be</span>
+</code></pre><p>二进制上传大型文件，注意勾销“以 ASCII 方式上传文件”<br><img src="../../../../img/secureCRT二进制上传文件到Linux.png" alt="SecureCRT上传文件图片"></p>
+<p>选择 Oracle 官网下载安装包后，确定，开始上传</p>
+<p>上传完毕后，执行命令</p>
+<pre><code>mv linux* /tmp
+cd /tmp
+unzip linux.x64_11gR2_database_1of2.zip
+unzip linux.x64_11gR2_database_2of2.zip    
+<span class="preprocessor"># 此步用户连接远程服务器（此处使用本地机器，略）</span>
+<span class="preprocessor"># xhost +</span>
+<span class="preprocessor"># 切换到用户 oracle，开始安装</span>
+su  -  oracle
+<span class="preprocessor"># 防止中文乱码</span>
+export LANG=en_US
+cd /database
+./runInstaller
+</code></pre><p>2、图形化安装过程</p>
+<h2 id="创建数据库实例">创建数据库实例</h2><p><img src="../../../../img/oracle_install--configure security updates.png" alt="配置安全更新"><br><img src="../../../../img/oracle_install--installation option.png" alt="安装项选择"><br><img src="../../../../img/oracle_install--grid options.png" alt="数据库类型"><br><img src="../../../../img/oracle_install--product languages.png" alt="语言"><br><img src="../../../../img/oracle_install--database edition.png" alt="数据库版本"><br><img src="../../../../img/oracle_install--installation location.png" alt="安装位置"><br><img src="../../../../img/oracle_install--operation system groups.png" alt="数据库组"><br><img src="../../../../img/oracle_install--prerequisite checks.png" alt="检查"><br><img src="../../../../img/oracle_install--summary.png" alt="总体安装信息"></p>
+<p>其后，点击 Finish 开始安装。</p>
+<p>若安装过程中，出现错误。需要查看日志或上网检索原因（一般是没有安装必须原则的软件包）</p>
+<p>3、图形化安装结束后，需执行2个脚本</p>
+<pre><code><span class="keyword">su</span> – root
+<span class="keyword">cd</span>  /home/oracle/<span class="keyword">app</span>/oracle/product/11.2.0/dbhome_1
+<span class="keyword">sh</span>  root.<span class="keyword">sh</span>
+<span class="keyword">cd</span> /home/oracle/<span class="keyword">app</span>/oraInventory
+<span class="keyword">sh</span>  orainstRoot.<span class="keyword">sh</span>
+</code></pre><p>4、创建实例</p>
+<pre><code>su - oracle
+<span class="built_in">export</span> LANG=en_US
+dbca
+</code></pre><p>显示数据库配置向导界面，</p>
+<p>（1）选择“create a database”</p>
+<p>（2）选择“custom database”</p>
+<p>（3）database 和 sid 均设为 orcl（可按需命名）</p>
+<p>（4）不配置“enterprises manager”，实际中很少用此功能</p>
+<p>（5）密码使用统一密码，便于记忆（工作中，按要求设置，可能是每个用户密码不同）</p>
+<p>（6）数据库存放位置采取默认</p>
+<p>（7）不勾选快速回复和归档，工作中，快速恢复和归档按需设置<br>注：归档便于查看数据库信息</p>
+<p>（8）按需选择“Database Components”</p>
+<p>（9）数据库参数一般选择默认<br>另外，中文开发时，字符集选择 ZHS16GBK - GBK 16-bit Simplified Chinese<br>National Character Set 选择 AL16UTF16 - Unicode UTF-16 Universal character set<br>其余默认</p>
+<p>（10）测试实例是否创建成功<br>打开一个新的终端<br>    sqlplus /nolog</p>
+<p>若显示 Oracle 信息，则实例创建成功</p>
+<h2 id="配置监听和本地网络服务">配置监听和本地网络服务</h2><pre><code><span class="title">su</span> - oracle
+netca
+</code></pre><p>显示数据库网络配置界面</p>
+<p>（1）选择 “Listener configuration”</p>
+<p>（2）选择 “Add”</p>
+<p>（3）配置 Listener 名称和所用协议（一般为 TCP）</p>
+<p>（4）不配置其他监听器</p>
+<p>（5）选择“Local Net Service Name configuration”</p>
+<p>（6）选择“Add”</p>
+<p>（7）输入“Service Name”，要与图形化安装过程中输入的 sid 相同</p>
+<p>（8）协议使用 TCP</p>
+<p>（9）输入 Host name（即 Oracle 安装系统 ip 地址）和端口号（默认是1521）</p>
+<p>（10）选择“Yes，perform a test”</p>
+<p>（11）输入图形化安装时，确定的用户和密码，查看测试结果</p>
+<p>（12）若不成功，开放端口 1521</p>
+<pre><code><span class="keyword">iptables</span> -I INPUT -p tcp --dport 1521 -j ACCEPT
+<span class="keyword">service</span> iptables save
+    <span class="keyword">iptables</span>：将防火墙规则保存到 /etc/sysconfig/iptables：    <span class="sqbracket"> [确定]</span>
+<span class="keyword">service</span> iptables restart
+    <span class="keyword">iptables</span>：将链设置为政策 ACCEPT：filter                   <span class="sqbracket"> [确定]</span>
+    <span class="keyword">iptables</span>：清除防火墙规则：                                <span class="sqbracket"> [确定]</span>
+    <span class="keyword">iptables</span>：正在卸载模块：                                  <span class="sqbracket"> [确定]</span>
+    <span class="keyword">iptables</span>：应用防火墙规则：                                <span class="sqbracket"> [确定]</span>
+<span class="keyword">service</span> iptables status
+</code></pre><p>再次测试，成功</p>
+<p>（13）输入 service name，一般与 sid 相同</p>
+<p>（14）结束，关闭界面</p>
+<h2 id="额外配置">额外配置</h2><h3 id="使用_dbstart_和_dbshut_来启动/关闭数据库">使用 dbstart 和 dbshut 来启动/关闭数据库</h3><p>使用dbstart和dbstop来启动Oracle服务</p>
+<p>可能使用dbstart命令来启动数据库更方便一些,但初次安装完oracle之后使用dbstart命令会报这样的错误</p>
+<pre><code>ORACLE_HOME_LISTNER is not SET, unable to auto-start Oracle Net Listener  
+<span class="string">Usage:</span> <span class="regexp">/u01/</span>app<span class="regexp">/oracle/</span>product<span class="regexp">/11.2/</span>db<span class="regexp">/bin/</span>dbstart ORACLE_HOME  
+</code></pre><p>出现这样错误的原因是由于没有设置ORACLE_HOME_LISTNER的原因,我们查看一下dbstart这个文件</p>
+<pre><code>more  <span class="regexp">/home/</span>oracle_11<span class="regexp">/app/</span>oracle<span class="regexp">/product/</span><span class="number">11.2</span>.<span class="number">0</span><span class="regexp">/db_1/</span>bin<span class="regexp">/dbstart  </span>
+</code></pre><p>部分内容如下</p>
+<pre><code><span class="comment"># First argument is used to bring up Oracle Net Listener  </span>
+ORACLE_HOME_LISTNER=<span class="variable">$1</span>  
+<span class="keyword">if</span> [ ! <span class="variable">$ORACLE_HOME_LISTNER</span> ] ; <span class="keyword">then</span>  
+  <span class="built_in">echo</span> <span class="string">"ORACLE_HOME_LISTNER is not SET, unable to auto-start Oracle Net Listener"</span>  
+  <span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$0</span> ORACLE_HOME"</span>  
+<span class="keyword">else</span>  
+  LOG=<span class="variable">$ORACLE_HOME_LISTNER</span>/listener.log  
+  <span class="comment"># Set the ORACLE_HOME for the Oracle Net Listener, it gets reset to  </span>
+  <span class="comment"># a different ORACLE_HOME for each entry in the oratab.  </span>
+  <span class="built_in">export</span> ORACLE_HOME=<span class="variable">$ORACLE_HOME_LISTNER</span>  
+</code></pre><p>解决方案：$ORACLE_HOME_LINTNER 的值原来为 $1,修改为 $ORACLE_HOME</p>
+<p>再一次执行dbstart,但是没有反映,没有报错,如果我们需要使用dbstart,则需要在/etc/oratab这个文件中的实例最后的N改成Y,如下</p>
+<pre><code><span class="string">orcl:</span><span class="regexp">/home/</span>oracle_11<span class="regexp">/app/</span>oracle<span class="regexp">/product/</span><span class="number">11.2</span>/<span class="string">db:</span>Y  
+</code></pre><p>OK,保存,再试一下dbstart命令,返回结果如下</p>
+<pre><code>Processing Database<span class="instruction"> instance </span><span class="string">"orcl"</span>: log file /home/oracle_11/app/oracle/product/11.2.0/db_1/startup.log  
+</code></pre><p>dbshut进行同样的设置.</p>
+<p>这样,以后就可以在启动监听之后直接使用dbstart和dbshut命令来启动和关闭数据了</p>
+<h3 id="Oracle自动启动">Oracle自动启动</h3><p>将Oracle服务添加到Linux开机启动项，以root用户建立/etc/rc.d/init.d/oradb脚本文件，文件内容如下：</p>
+<pre><code><span class="shebang">#!/bin/bash  </span>
+<span class="comment"># chkconfig: 2345 90 10  </span>
+<span class="built_in">export</span> ORACLE_BASE=/home/oracle_11/app/  
+<span class="built_in">export</span> ORACLE_HOME=<span class="variable">$ORACLE_BASE</span>/oracle/product/<span class="number">11.2</span>.<span class="number">0</span>/db_1  
+<span class="built_in">export</span> ORACLE_SID=orcl  
+<span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$ORACLE_HOME</span>/bin  
+ORCL_OWN=<span class="string">"oracle"</span>  
+<span class="comment"># if the executables do not exist -- display error  </span>
+<span class="keyword">if</span> [ ! <span class="operator">-f</span> <span class="variable">$ORACLE_HOME</span>/bin/dbstart -o ! <span class="operator">-d</span> <span class="variable">$ORACLE_HOME</span> ]  
+<span class="keyword">then</span>  
+<span class="built_in">echo</span> <span class="string">"Oracle startup: cannot start"</span>  
+<span class="built_in">exit</span> <span class="number">1</span>  
+<span class="keyword">fi</span>  
+<span class="comment"># depending on parameter -- start, stop, restart  </span>
+<span class="comment"># of the instance and listener or usage display  </span>
+<span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span>  
+start)  
+<span class="comment"># Oracle listener and instance startup  </span>
+<span class="built_in">echo</span> -n <span class="string">"Starting Oracle: "</span>  
+su - <span class="variable">$ORCL_OWN</span> -c <span class="string">"<span class="variable">$ORACLE_HOME</span>/bin/dbstart"</span>  
+touch /var/lock/subsys/oradb  
+su - <span class="variable">$ORCL_OWN</span> -c <span class="string">"<span class="variable">$ORACLE_HOME</span>/bin/emctl start dbconsole"</span>  
+<span class="built_in">echo</span> <span class="string">"OK"</span>  
+;;  
+stop)  
+<span class="comment"># Oracle listener and instance shutdown  </span>
+<span class="built_in">echo</span> -n <span class="string">"Shutdown Oracle: "</span>  
+su - <span class="variable">$ORCL_OWN</span> -c <span class="string">"<span class="variable">$ORACLE_HOME</span>/bin/emctl stop dbconsole"</span>  
+su - <span class="variable">$ORCL_OWN</span> -c <span class="string">"<span class="variable">$ORACLE_HOME</span>/bin/dbshut"</span>  
+rm <span class="operator">-f</span> /var/lock/subsys/oradb  
+<span class="built_in">echo</span> <span class="string">"OK"</span>  
+;;  
+reload|restart)  
+<span class="variable">$0</span> stop  
+<span class="variable">$1</span> start  
+;;  
+*)  
+<span class="built_in">echo</span> <span class="string">"Usage: 'basename <span class="variable">$0</span>' start|stop|restart|reload"</span>  
+<span class="built_in">exit</span> <span class="number">1</span>  
+<span class="keyword">esac</span>  
+<span class="built_in">exit</span> <span class="number">0</span>
+</code></pre><p>将该文件添加到开机启动</p>
+<pre><code>chmod <span class="number">755</span> <span class="regexp">/etc/</span>rc.d<span class="regexp">/init.d/</span>oradb  
+chkconfig --add oradb  
+</code></pre><p>重启服务</p>
+<pre><code><span class="keyword">service</span> oradb <span class="literal">stop</span>  
+<span class="keyword">service</span> oradb <span class="literal">start</span>  
+</code></pre><p>下次启动机器的时候，Oracle服务会随机器一起启动。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Linux/">Linux</a><a href="/tags/Oracle/">Oracle</a><a href="/tags/install/">install</a><a href="/tags/question/">question</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2015/01/06/关于Linux中Oracle的安装流程及其问题（仅单实例）/" data-title="关于Linux中Oracle的安装流程及其问题（仅单实例） | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/01/19/系列Linux命令行大全（三）/" title="系列Linux命令行大全（三）">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  系列Linux命令行大全（三）</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/10/23/关于在Linux中安装tomcat/"  title="关于在Linux中安装tomcat">
+ <strong>NEXT:</strong><br/> 
+ <span>关于在Linux中安装tomcat
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#root登录"><span class="toc-number">1.</span> <span class="toc-text">root登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#检查和配置环境"><span class="toc-number">2.</span> <span class="toc-text">检查和配置环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#检查环境"><span class="toc-number">2.1.</span> <span class="toc-text">检查环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置环境"><span class="toc-number">2.2.</span> <span class="toc-text">配置环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Oracle软件"><span class="toc-number">3.</span> <span class="toc-text">安装Oracle软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#命令行操作"><span class="toc-number">3.1.</span> <span class="toc-text">命令行操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图形化界面安装"><span class="toc-number">3.2.</span> <span class="toc-text">图形化界面安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建数据库实例"><span class="toc-number">4.</span> <span class="toc-text">创建数据库实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置监听和本地网络服务"><span class="toc-number">5.</span> <span class="toc-text">配置监听和本地网络服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#额外配置"><span class="toc-number">6.</span> <span class="toc-text">额外配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_dbstart_和_dbshut_来启动/关闭数据库"><span class="toc-number">6.1.</span> <span class="toc-text">使用 dbstart 和 dbshut 来启动/关闭数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Oracle自动启动"><span class="toc-number">6.2.</span> <span class="toc-text">Oracle自动启动</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

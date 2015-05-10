@@ -1,0 +1,374 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>关于适配器模式 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="适配器模式，转换不同接口，实现兼容">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/07/17/关于适配器模式/" title="关于适配器模式" itemprop="url">关于适配器模式</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-07-17T15:58:47.000Z" itemprop="datePublished">Jul 17 2014</time>
+    更新日期:<time datetime="2014-07-17T09:23:59.000Z" itemprop="dateModified">Jul 17 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#特定环境"><span class="toc-number">1.</span> <span class="toc-text">特定环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一类问题"><span class="toc-number">2.</span> <span class="toc-text">一类问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类适配器和对象适配器"><span class="toc-number">4.</span> <span class="toc-text">类适配器和对象适配器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优劣"><span class="toc-number">5.</span> <span class="toc-text">优劣</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+		</div>
+		
+		<p>适配器模式，转换不同接口，实现兼容</p>
+<a id="more"></a>
+<h2 id="特定环境">特定环境</h2><blockquote>
+<ul>
+<li><p>接口兼容<br>—使用现有类，但使用方式与原有方式不同，需要转换<br>—现有接口兼容第三方组件<br>—保留并使用原系统类的功能，但客户端访问方式发生变化，同时无法修改原有代码时</p>
+</li>
+<li><p>相近功能类间的转换</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="一类问题">一类问题</h2><p>接口不兼容的类，不能协同合作</p>
+<h2 id="解决方案">解决方案</h2><p>3个角色：</p>
+<blockquote>
+<ul>
+<li>目标接口 Target ： 提供期待的使用方式，由类或接口实现</li>
+<li>被适配者 Adaptee ： 类原有使用方式，由类或接口实现</li>
+<li>适配器 Adapter ： 封装<strong>Adaptee</strong>引用，实现或继承<strong>Target</strong>，重写Target方法，封装Adaptee方法</li>
+</ul>
+</blockquote>
+<h2 id="类适配器和对象适配器">类适配器和对象适配器</h2><p>类适配器通过多重继承，来对接口进行匹配</p>
+<p>Java不支持多重继承，暂不作讨论</p>
+<h2 id="优劣">优劣</h2><p>优点：</p>
+<blockquote>
+<ul>
+<li>复用类，减少开发量</li>
+<li>可扩展原有类功能</li>
+<li>可通过目标接口，使用多个被适配者</li>
+<li>被适配者对接口使用者透明</li>
+<li>目标接口和被适配者解耦</li>
+</ul>
+</blockquote>
+<p>缺点：<br>对于对象适配器，适配器的编写或修改，较为复杂</p>
+<p>因为，需要原系统提供接口（即被适配者的API），并需要理解其适用环境</p>
+<h2 id="参考">参考</h2><p><a href="http://www.cnblogs.com/wangjq/archive/2012/07/09/2582485.html" target="_blank" rel="external">设计模式学习笔记-适配器模式</a>, 作者： Wang Juqiang</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/adapter/">adapter</a><a href="/tags/adpatee/">adpatee</a><a href="/tags/design/">design</a><a href="/tags/pattern/">pattern</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/07/17/关于适配器模式/" data-title="关于适配器模式 | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/07/18/关于模板方法模式/" title="关于模板方法模式">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于模板方法模式</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/17/关于命令者模式/"  title="关于命令者模式">
+ <strong>NEXT:</strong><br/> 
+ <span>关于命令者模式
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#特定环境"><span class="toc-number">1.</span> <span class="toc-text">特定环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一类问题"><span class="toc-number">2.</span> <span class="toc-text">一类问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类适配器和对象适配器"><span class="toc-number">4.</span> <span class="toc-text">类适配器和对象适配器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优劣"><span class="toc-number">5.</span> <span class="toc-text">优劣</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

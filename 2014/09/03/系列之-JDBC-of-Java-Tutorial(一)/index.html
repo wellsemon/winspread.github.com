@@ -1,0 +1,426 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>系列之 JDBC of Java Tutorial(一) | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="JDBC API 允许用户访问任何形式的表格数据，尤其是存储在关系数据库中的">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/09/03/系列之-JDBC-of-Java-Tutorial(一)/" title="系列之 JDBC of Java Tutorial(一)" itemprop="url">系列之 JDBC of Java Tutorial(一)</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-09-03T09:12:21.000Z" itemprop="datePublished">Sep 3 2014</time>
+    更新日期:<time datetime="2014-09-03T11:14:07.000Z" itemprop="dateModified">Sep 3 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC_简单功能"><span class="toc-number">1.</span> <span class="toc-text">JDBC 简单功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC_组成"><span class="toc-number">2.</span> <span class="toc-text">JDBC 组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC_架构"><span class="toc-number">3.</span> <span class="toc-text">JDBC 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双层"><span class="toc-number">4.</span> <span class="toc-text">双层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三层"><span class="toc-number">5.</span> <span class="toc-text">三层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC_部分特性"><span class="toc-number">6.</span> <span class="toc-text">JDBC 部分特性</span></a></li></ol>
+		</div>
+		
+		<p>JDBC API 允许用户访问任何形式的表格数据，尤其是存储在关系数据库中的</p>
+<a id="more"></a>
+<h2 id="JDBC_简单功能">JDBC 简单功能</h2><blockquote>
+<ul>
+<li><p>连接数据源，如数据库</p>
+</li>
+<li><p>传给数据库查询和更新指令</p>
+</li>
+<li><p>获取并处理数据库响应查询返回的结果</p>
+</li>
+</ul>
+</blockquote>
+<p>示例代码：</p>
+<pre><code><span class="title">public</span> void connectToAndQueryDatabase(String username, String password) {
+
+    <span class="title">Connection</span> con = DriverManager.getConnection(
+                     <span class="string">"jdbc:myDriver:myDatabase"</span>,
+                     username,
+                     password);
+
+    <span class="title">Statement</span> stmt = con.createStatement();
+    <span class="title">ResultSet</span> rs = stmt.executeQuery(<span class="string">"SELECT a, b, c FROM Table1"</span>);
+
+    <span class="title">while</span> (rs.next()) {
+        <span class="title">int</span> x = rs.getInt(<span class="string">"a"</span>);
+        <span class="title">String</span> s = rs.getString(<span class="string">"b"</span>);
+        <span class="title">float</span> f = rs.getFloat(<span class="string">"c"</span>);
+    }
+}
+</code></pre><h2 id="JDBC_组成">JDBC 组成</h2><p>JDBC，以J开头，犹如金字塔这一奇观</p>
+<p>金字塔底部，是入口（接口API）</p>
+<p>底部中心，是机关驱动总控制（DriverManager），是金字塔的核心（驱动控制器是JDBC基石）</p>
+<p>相传，一个逗比国王，测试金字塔中的一个桥是否正常运行（测试组件决定 JDBC 驱动能否运行程序）时（JDBC-ODBC桥），按了自毁开关，然后…</p>
+<p>金字塔整整3层控制室（JDBC-ODBC桥适合Java三层架构），都是一片狼藉，碎石遍地</p>
+<p>应急系统紧急启动，按各个房间代码（ODBC二进制代码），一个个房间进行拯救性恢复（每个机器加载 ODBC）</p>
+<p>承建金字塔的企业，因此蒙受巨额损失，没处哭去</p>
+<p>企业老板都拉网，打渔去了（JDBC-ODBC桥适合企业网络）</p>
+<p>1、 JDBC API</p>
+<p>混混如何访问各地老大接头的教学（JDBC 应用编程接口）：</p>
+<p>接头即拜访</p>
+<p>要拜访分布在各地（分布式），住房架构迥异（异构环境）的数据头头（数据源）</p>
+<p>要带两个包（java.sql和javax.sql）</p>
+<p>接头时（编程访问接口），要拿出自己的台账（Java平台），才能进屋访问（编程访问接口）</p>
+<blockquote>
+<ul>
+<li><p>提供关系型数据的编程访问接口</p>
+</li>
+<li><p>能与分布式，异构环境下的数据源交互</p>
+</li>
+<li><p>是 Java平台的一部分（包括J2SE和J2EE）</p>
+</li>
+<li><p>JDBC 4.0 API 分成 java.sql 和 javax.sql 两个包</p>
+</li>
+</ul>
+</blockquote>
+<p>2、DriverManager</p>
+<p>JDBC 架构的基石：定义对象，将 Java 应用连接到 JDBC 驱动</p>
+<p>标准扩展包 ：javax.naming 和 javax.sql，允许使用注册到 JNDI 的 DataSource对象，来部署数据源的连接</p>
+<p>评价：小而简</p>
+<p>推荐：虽可使用 Connection，但推荐使用 DataSource</p>
+<p>3、JDBC 测试组件</p>
+<p>判断 JDBC 驱动是否运行程序</p>
+<p>虽不全面，但体现 JDBC API 很多重要特性</p>
+<p>4、JDBC-ODBC 桥</p>
+<p>通过 ODBC 驱动，来提供 JDBC 访问</p>
+<p>但要求每个机器都有 ODBC 驱动</p>
+<p>因此，适用于企业网络（如果客户端安装不是问题），或三层架构的应用服务器代码</p>
+<h2 id="JDBC_架构">JDBC 架构</h2><p>分为双层架构和三层架构</p>
+<h2 id="双层">双层</h2><p><img src="../../../../img/Two-tier Architecture for Data Access.gif" alt="数据访问双层架构"></p>
+<p>作用：此架构中，Java Applet 或应用直接访问数据源</p>
+<p>条件：要求 Driver 能与访问的数据库交互</p>
+<p>机制：用户命令传给数据库或其他数据源，随之结果被返回</p>
+<p>部署：数据源可以在另一台机器上，用户通过网络连接，称为 C/S配置（可以是内联网或互联网）</p>
+<h2 id="三层">三层</h2><p><img src="../../../../img/Three-tier Architecture for Data Access.gif" alt="数据访问三层架构"></p>
+<p>侧架构特殊之处在于，引入中间层服务</p>
+<p>流程：命令和结构都会经过该层</p>
+<p>吸引：可以增加企业数据的访问控制，以及多种类型的更新；另外，也可简化应用的部署，并在多数情况下有性能优势</p>
+<p>历史趋势：</p>
+<p>以往，因性能问题，中间层都用 C 或 C++ 编写</p>
+<p>随着优化编译器（将 Java 字节码 转为 高效的 特定机器码）和技术的发展，如EJB，Java 开始用于中间层的开发</p>
+<p>这也让 Java 的优势突显出现出来</p>
+<p>使用 Java 作为服务器代码语言，JDBC随之被重视</p>
+<h2 id="JDBC_部分特性">JDBC 部分特性</h2><p>连接池</p>
+<p>分布式事务</p>
+<p>离线 rowset</p>
+<p>连接 Data Source</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/DataSource/">DataSource</a><a href="/tags/DriverManager/">DriverManager</a><a href="/tags/java/">java</a><a href="/tags/jdbc/">jdbc</a><a href="/tags/tutorial/">tutorial</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/09/03/系列之-JDBC-of-Java-Tutorial(一)/" data-title="系列之 JDBC of Java Tutorial(一) | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/09/10/系列之Linux命令行大全笔记（二）/" title="系列之Linux命令行大全笔记（二）">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  系列之Linux命令行大全笔记（二）</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/09/02/系列之Linux命令行大全笔记（一）/"  title="系列之Linux命令行大全笔记（一）">
+ <strong>NEXT:</strong><br/> 
+ <span>系列之Linux命令行大全笔记（一）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC_简单功能"><span class="toc-number">1.</span> <span class="toc-text">JDBC 简单功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC_组成"><span class="toc-number">2.</span> <span class="toc-text">JDBC 组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC_架构"><span class="toc-number">3.</span> <span class="toc-text">JDBC 架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双层"><span class="toc-number">4.</span> <span class="toc-text">双层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三层"><span class="toc-number">5.</span> <span class="toc-text">三层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC_部分特性"><span class="toc-number">6.</span> <span class="toc-text">JDBC 部分特性</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

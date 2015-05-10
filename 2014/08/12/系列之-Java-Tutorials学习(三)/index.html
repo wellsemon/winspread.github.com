@@ -1,0 +1,377 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>系列之 Java Tutorials学习(三) | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="详解 Hello World 应用程序">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/08/12/系列之-Java-Tutorials学习(三)/" title="系列之 Java Tutorials学习(三)" itemprop="url">系列之 Java Tutorials学习(三)</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-12T11:39:26.000Z" itemprop="datePublished">Aug 12 2014</time>
+    更新日期:<time datetime="2014-08-12T11:58:53.000Z" itemprop="dateModified">Aug 12 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#源码"><span class="toc-number">1.</span> <span class="toc-text">源码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">2.1.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类定义"><span class="toc-number">2.2.</span> <span class="toc-text">类定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#main_方法"><span class="toc-number">2.3.</span> <span class="toc-text">main 方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令行参数"><span class="toc-number">3.</span> <span class="toc-text">命令行参数</span></a></li></ol>
+		</div>
+		
+		<p>详解 Hello World 应用程序</p>
+<a id="more"></a>
+<h2 id="源码">源码</h2><pre><code><span class="keyword">class</span> <span class="title">HelloWorldApp</span> {
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        System.<span class="keyword">out</span>.println(<span class="string">"Hello World!"</span>); <span class="comment">// Display the string.</span>
+    }
+}
+</code></pre><h2 id="分析">分析</h2><p>Hello World 由以下部分组成：</p>
+<blockquote>
+<ul>
+<li>代码注释</li>
+<li>类定义</li>
+<li>main方法</li>
+</ul>
+</blockquote>
+<h3 id="注释">注释</h3><p>编译器忽略注释，但有益于其他程序员阅读</p>
+<p>注释包括：</p>
+<blockquote>
+<ul>
+<li>多行注释<br>格式 /* text */<br>即使换行，其中内容也会被忽略</li>
+<li>文档注释<br>格式 /** document **/<br>javadoc 命令使用该注释，生成代码文档<br>详见<a href="http://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/index.html" target="_blank" rel="external">Javadoc™ tool documentation</a></li>
+<li>单行注释<br>格式 // text<br>该注释不能换行</li>
+</ul>
+</blockquote>
+<h3 id="类定义">类定义</h3><p>基本格式：</p>
+<pre><code><span class="class"><span class="keyword">class</span> <span class="title">ClassName</span></span>{
+
+}
+</code></pre><p>附：<br>1、注意，类的命名有一定规则</p>
+<h3 id="main_方法">main 方法</h3><p>格式：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args)
+</code></pre><p>其中，args 是当前系统传递给应用的信息</p>
+<p>以下命令可实现传递：</p>
+<pre><code>java MyApp ar<span class="keyword">g1</span> ar<span class="keyword">g2</span>
+</code></pre><p>每个字符串，都称为 命令行参数</p>
+<h2 id="命令行参数">命令行参数</h2><p>通过命令行参数，可以不用重新编译，即可影响应用的操作</p>
+<p>如，传递排序方式，排序应用按其排列</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/hello/">hello</a><a href="/tags/java/">java</a><a href="/tags/jdk/">jdk</a><a href="/tags/study/">study</a><a href="/tags/tutorial/">tutorial</a><a href="/tags/world/">world</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/08/12/系列之-Java-Tutorials学习(三)/" data-title="系列之 Java Tutorials学习(三) | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/08/13/关于线程安全/" title="关于线程安全">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于线程安全</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/08/12/关于Java标识符的规则/"  title="关于Java标识符的规则">
+ <strong>NEXT:</strong><br/> 
+ <span>关于Java标识符的规则
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#源码"><span class="toc-number">1.</span> <span class="toc-text">源码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">2.1.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类定义"><span class="toc-number">2.2.</span> <span class="toc-text">类定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#main_方法"><span class="toc-number">2.3.</span> <span class="toc-text">main 方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令行参数"><span class="toc-number">3.</span> <span class="toc-text">命令行参数</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

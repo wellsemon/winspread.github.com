@@ -1,0 +1,390 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>系列之Java Tutorials学习(一) | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="基于Java官方指导文档，开展学习">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/08/08/系列之Java-Tutorials学习(一)/" title="系列之Java Tutorials学习(一)" itemprop="url">系列之Java Tutorials学习(一)</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-08T08:56:30.000Z" itemprop="datePublished">Aug 8 2014</time>
+    更新日期:<time datetime="2014-08-08T10:24:01.000Z" itemprop="dateModified">Aug 8 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java是什么"><span class="toc-number">1.</span> <span class="toc-text">Java是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特性"><span class="toc-number">2.</span> <span class="toc-text">特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译与运行"><span class="toc-number">3.</span> <span class="toc-text">编译与运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_平台本质"><span class="toc-number">4.</span> <span class="toc-text">Java 平台本质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_平台_=_JVM_+_API"><span class="toc-number">5.</span> <span class="toc-text">Java 平台 = JVM + API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_独立于平台"><span class="toc-number">6.</span> <span class="toc-text">Java 独立于平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java可以做什么"><span class="toc-number">7.</span> <span class="toc-text">Java可以做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_带来的益处"><span class="toc-number">8.</span> <span class="toc-text">Java 带来的益处</span></a></li></ol>
+		</div>
+		
+		<p>基于<a href="http://pan.baidu.com/s/1dDksSNn" target="_blank" rel="external">Java官方指导文档</a>，开展学习</p>
+<a id="more"></a>
+<h2 id="Java是什么">Java是什么</h2><p>Java 是编程语言，也是一个平台</p>
+<h2 id="特性">特性</h2><p>简单  可移植  面向对象  分布式运算<br>高性能  健壮  安全  动态  体系结构中立</p>
+<p>记忆宫殿：<br>恋爱是件<strong>简单</strong>的事，但放到社会<strong>体系中</strong>（中立体系结构），也就复杂起来<br><strong>对象</strong>异地分布，<br><strong>移情别恋</strong>（可移植）也不奇怪，<br>要留住恋人，<strong>性能力</strong>是一方面，<br>另外，<strong>健壮</strong>的身材，强大的<strong>安全</strong>感，也不可或缺</p>
+<h2 id="编译与运行">编译与运行</h2><p><img src="../../../../img/java-compile-and-run.gif" alt="Java源码编译运行"></p>
+<p>如此，通过 JVM，Java 程序能跨平台运行</p>
+<p><img src="../../../../img/java-run-on-platforms.gif" alt="Java程序可在多个平台运行"></p>
+<p>附：部分虚拟机，检查性能瓶颈或将频繁使用的代码域转为本地代码，来提高性能，如 <a href="http://www.oracle.com/technetwork/java/javase/tech/index-jsp-136373.html" target="_blank" rel="external">Java SE HotSpot at a Glance</a></p>
+<h2 id="Java_平台本质">Java 平台本质</h2><p>平台，是程序在其中运行的硬/软件环境</p>
+<p>多数平台 = 操作系统 + 底层硬件</p>
+<p>Java 平台是<strong>纯软件平台</strong>，运行在其他基于硬件的平台上</p>
+<h2 id="Java_平台_=_JVM_+_API">Java 平台 = JVM + API</h2><p>API 是现有软件元素的集合，能提供许多有用的特性</p>
+<p>API被划分为多个相关类和接口的库</p>
+<p>这些库，就是<strong>包</strong></p>
+<p><img src="../../../../img/java-platform-archi.gif" alt="Java平台结构"></p>
+<h2 id="Java_独立于平台">Java 独立于平台</h2><p>作为平台独立的环境， Java平台会比本地代码稍慢</p>
+<p>但编译和虚拟机技术可以降低这种影响</p>
+<h2 id="Java可以做什么">Java可以做什么</h2><blockquote>
+<ul>
+<li><p>开发工具<br>涉及编译(javac)，运行(java)，监视，调试和文档生成(javadoc)</p>
+</li>
+<li><p>编程接口 API<br>提供 Java 编程语言的核心功能</p>
+</li>
+<li><p>部署<br>JDK 按标准机制，将应用展现给终端用户<br>如：ava Web Start 和 Java Plug-In </p>
+</li>
+<li><p>用户接口工具集<br>借助 JavaFX，Swing 和 Java 2D，Java 能够创建复杂的图形用户接口</p>
+</li>
+<li><p>集成库<br>通过Java RMI-IIOP Technology协议，集成库，如 Java IDL API， JDBC API， JNDI API， Java RMI， Java Remote Method Invocation，能够访问数据库，并操纵远程对象</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="Java_带来的益处">Java 带来的益处</h2><blockquote>
+<ul>
+<li><p>快速上手<br>面向对象，尤其适合已学过C和C++的程序员</p>
+</li>
+<li><p>代码量更小<br>少量代码即可实现其他语言大量代码的功能</p>
+</li>
+<li><p>代码更优秀<br>Java鼓励优良的编程实践，另外，Java垃圾回收机制能避免内存泄露<br>同时，可复用其他代码，但仅带来少量bug</p>
+</li>
+<li><p>加快开发</p>
+</li>
+<li><p>避免对平台的依赖</p>
+</li>
+<li><p>一次编写，处处运行</p>
+</li>
+<li><p>更简单的软件分发</p>
+</li>
+</ul>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/document/">document</a><a href="/tags/java/">java</a><a href="/tags/jdk/">jdk</a><a href="/tags/tutorial/">tutorial</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/08/08/系列之Java-Tutorials学习(一)/" data-title="系列之Java Tutorials学习(一) | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/08/11/系列之Java-Tutorials学习(二)/" title="系列之Java Tutorials学习(二)">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  系列之Java Tutorials学习(二)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/08/07/探讨编程语言与各种思想/"  title="探讨编程语言与各种思想">
+ <strong>NEXT:</strong><br/> 
+ <span>探讨编程语言与各种思想
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java是什么"><span class="toc-number">1.</span> <span class="toc-text">Java是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特性"><span class="toc-number">2.</span> <span class="toc-text">特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译与运行"><span class="toc-number">3.</span> <span class="toc-text">编译与运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_平台本质"><span class="toc-number">4.</span> <span class="toc-text">Java 平台本质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_平台_=_JVM_+_API"><span class="toc-number">5.</span> <span class="toc-text">Java 平台 = JVM + API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_独立于平台"><span class="toc-number">6.</span> <span class="toc-text">Java 独立于平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java可以做什么"><span class="toc-number">7.</span> <span class="toc-text">Java可以做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_带来的益处"><span class="toc-number">8.</span> <span class="toc-text">Java 带来的益处</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

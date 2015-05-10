@@ -1,0 +1,413 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>关于Weblogic Server | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="Weblogic, 美国Oracle公司名下产品，是一个基于 J2EE 架构、可扩展的应用服务器">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/08/02/关于Weblogic-Server/" title="关于Weblogic Server" itemprop="url">关于Weblogic Server</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-01T16:04:56.000Z" itemprop="datePublished">Aug 2 2014</time>
+    更新日期:<time datetime="2014-08-01T17:59:00.000Z" itemprop="dateModified">Aug 2 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#总览"><span class="toc-number">1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编程模型"><span class="toc-number">2.</span> <span class="toc-text">编程模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高可用性"><span class="toc-number">3.</span> <span class="toc-text">高可用性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#诊断框架"><span class="toc-number">4.</span> <span class="toc-text">诊断框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全"><span class="toc-number">5.</span> <span class="toc-text">安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户"><span class="toc-number">6.</span> <span class="toc-text">用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集成_Oracle_WebLogic_Suite"><span class="toc-number">7.</span> <span class="toc-text">集成 Oracle WebLogic Suite</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集成其他系统"><span class="toc-number">8.</span> <span class="toc-text">集成其他系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集成其他_Web_服务器"><span class="toc-number">9.</span> <span class="toc-text">集成其他 Web 服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebLogic_Server_API_Examples_and_Sample_Application"><span class="toc-number">10.</span> <span class="toc-text">WebLogic Server API Examples and Sample Application</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级"><span class="toc-number">11.</span> <span class="toc-text">升级</span></a></li></ol>
+		</div>
+		
+		<p>Weblogic, 美国<strong>Oracle</strong>公司名下产品，是一个基于 J2EE 架构、可扩展的应用服务器</p>
+<a id="more"></a>
+<p><a href="http://docs.oracle.com/middleware/1212/wls/INTRO/intro.htm#INTRO123" target="_blank" rel="external">本文档选取部分<strong>官方文档</strong>翻译</a></p>
+<h2 id="总览">总览</h2><blockquote>
+<ul>
+<li>支持多种类型的分布式应用</li>
+<li>基于 SOA 应用的理想架构</li>
+<li>完整实现 J2EE 6.0 标准， 提供标准 API ，访问多种服务，如数据库、消息服务</li>
+<li>支持 Spring 框架</li>
+<li>确保应用环境可靠、安全、高可用、可扩展</li>
+<li>支持服务器集群。避免错误的影响</li>
+<li>诊断工具，辅助系统管理员，监视和调整性能</li>
+<li>安全性，保护服务访问，确保数据安全，防止恶意攻击</li>
+</ul>
+</blockquote>
+<p><img src="../../../../img/productoverview.gif" alt="Weblogic特性"></p>
+<h2 id="编程模型">编程模型</h2><p>支持以下相关编程：</p>
+<blockquote>
+<ul>
+<li><p>Web应用<br>  动态元素，如servlet、 jsp<br>  静态元素，如html、 image</p>
+</li>
+<li><p>Web服务<br>  通过网络，为其他系统，提供服务<br>  也可作为分布式 web 应用的一部分</p>
+</li>
+<li><p>XML<br>  数据交换<br>  一种存储方式，数据与形式相独立</p>
+</li>
+<li><p>JMS<br>  数据分发服务，确保相互关联的各系统间的信息交流<br>  信息，可以是请求、报告或事件</p>
+</li>
+<li><p>JDBC<br>  集中访问 DBMS 资源</p>
+</li>
+<li><p>Resource Adapter<br>  可连接到 <a href="http://baike.baidu.com/view/160639.htm?fr=aladdin" target="_blank" rel="external">EIS</a></p>
+</li>
+<li><p>EJB<br>  提供对象，来处理信息和业务逻辑</p>
+</li>
+<li><p>RMI<br>  远程方法调用</p>
+</li>
+<li><p>Security APIs<br>  允许将授权和认证集成到J2EE应用<br>  也可自定义安全措施</p>
+</li>
+<li><p><a href="http://wenku.baidu.com/link?url=XQnbT_YnJ_8Pqu1wAT0ecvlH7ZS4AhwckyweDyVYrKHRZlhEkdN2eEhUb7fGI7fywKcr6AXp9OQPTOPKWUOFdCEgtdg-CGyCEmGW81OzPjK" target="_blank" rel="external">WTC(WebLogic Tuxedo Connectivity)</a><br>  允许 WebLogic Server 应用和 Tuxedo 之间的相互操作</p>
+</li>
+<li><p>Coherence<br>  为 WebLogic Server 应用，提供分布式缓存和数据网格功能</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="高可用性">高可用性</h2><p>以下功能确保该特性：</p>
+<blockquote>
+<ul>
+<li><p>WebLogic Server 集群<br>  工作分发<br>  集群多节点可访问同一个session会话</p>
+</li>
+<li><p>Coherence 集群<br>  分发数据到各集群节点，确保可扩展和容错性<br>  Web 应用可选择使用 coherence 数据网格，来存储和复制 HTTP session 状态，来确保可扩展性、容错性和性能</p>
+</li>
+<li><p>Work Managers<br>  管理者基于规则和实际运行性能的统计信息，来考虑工作的优先级<br>  也可用来优化性能<br>  管理者可能广泛用于 WebLogic Server 域，或一个特殊应用或组件</p>
+</li>
+<li><p>Overload protection<br>  过载保护，确保 WebLogic Server 有能力监测和防止过载，并可从中恢复</p>
+</li>
+<li><p>Network channels<br>  通过传输类型，将传输分到不同网络渠道，来有效利用网络资源</p>
+</li>
+<li><p>WebLogic Server 持久化存储<br>  WebLogic Server 子系统和服务，有时要求具有持久化特性<br>  WebLogic Server内置、高性能的存储方案，解决了这个问题</p>
+</li>
+<li><p>Store-and-forward 服务<br>  存储转发服务，确保信息传递到分布在各个WebLogic Sever 上的应用<br>  若出现网络故障，则信息暂存在本地 server 上，等待网络畅通后，再传送</p>
+</li>
+<li><p>Enterprise-ready deployment tools<br>  企业级部署工具，确保应用能从开发环境，部署和迁移到生产环境</p>
+</li>
+<li><p>Production redeployment<br>  新版本产品的部署，不影响旧版本的运行中的工作</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="诊断框架">诊断框架</h2><p>诊断框架是一个监视和诊断服务，能够收集运行中的服务器及其部署的应用信息</p>
+<p>可检查 server 和应用的性能， 并能防止和诊断故障和性能瓶颈</p>
+<h2 id="安全">安全</h2><p>WebLogic Server 安全架构提供一个全面、灵活的安全基础设施，来应对网络应用遭遇的安全挑战</p>
+<p>因此该设施，也可作为一个 WebLogic 应用或企业级管理系统的独立部分</p>
+<h2 id="用户">用户</h2><p>支持多种类型的用户类型</p>
+<p>如，GUI图形界面，命令行，RMI-IIOP, T3, Java SE clients, Java EE thin clients, CORBA/IDL clients, and C++ clients that communicate with BEA Tuxedo</p>
+<h2 id="集成_Oracle_WebLogic_Suite">集成 Oracle WebLogic Suite</h2><h2 id="集成其他系统">集成其他系统</h2><h2 id="集成其他_Web_服务器">集成其他 Web 服务器</h2><h2 id="WebLogic_Server_API_Examples_and_Sample_Application">WebLogic Server API Examples and Sample Application</h2><h2 id="升级">升级</h2><p>支持将早期版本的应用，迁移到当前版本</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Middleware/">Middleware</a><a href="/tags/domain/">domain</a><a href="/tags/oracle/">oracle</a><a href="/tags/server/">server</a><a href="/tags/weblogic/">weblogic</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/08/02/关于Weblogic-Server/" data-title="关于Weblogic Server | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/08/05/关于ubuntu的安装/" title="关于ubuntu的安装">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于ubuntu的安装</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/28/关于hexo-rss插件的配置/"  title="关于hexo rss插件的配置">
+ <strong>NEXT:</strong><br/> 
+ <span>关于hexo rss插件的配置
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#总览"><span class="toc-number">1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编程模型"><span class="toc-number">2.</span> <span class="toc-text">编程模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高可用性"><span class="toc-number">3.</span> <span class="toc-text">高可用性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#诊断框架"><span class="toc-number">4.</span> <span class="toc-text">诊断框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全"><span class="toc-number">5.</span> <span class="toc-text">安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户"><span class="toc-number">6.</span> <span class="toc-text">用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集成_Oracle_WebLogic_Suite"><span class="toc-number">7.</span> <span class="toc-text">集成 Oracle WebLogic Suite</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集成其他系统"><span class="toc-number">8.</span> <span class="toc-text">集成其他系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集成其他_Web_服务器"><span class="toc-number">9.</span> <span class="toc-text">集成其他 Web 服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebLogic_Server_API_Examples_and_Sample_Application"><span class="toc-number">10.</span> <span class="toc-text">WebLogic Server API Examples and Sample Application</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级"><span class="toc-number">11.</span> <span class="toc-text">升级</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

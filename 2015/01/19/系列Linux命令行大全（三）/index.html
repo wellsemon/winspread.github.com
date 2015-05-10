@@ -1,0 +1,391 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>系列Linux命令行大全（三） | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="在《Linux命令行大全》一书中，第3章名称是 Linux 系统。概念太大，不过该节内容却是 Linux 系统最为核心的基础——查看 Linux 系统。">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/01/19/系列Linux命令行大全（三）/" title="系列Linux命令行大全（三）" itemprop="url">系列Linux命令行大全（三）</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-01-19T08:08:41.000Z" itemprop="datePublished">Jan 19 2015</time>
+    更新日期:<time datetime="2015-01-19T09:58:12.000Z" itemprop="dateModified">Jan 19 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ls_命令"><span class="toc-number">1.</span> <span class="toc-text">ls 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ls"><span class="toc-number">1.1.</span> <span class="toc-text">ls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls_若干目录路径"><span class="toc-number">1.2.</span> <span class="toc-text">ls 若干目录路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls_参数"><span class="toc-number">1.3.</span> <span class="toc-text">ls 参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls_-l_结果说明"><span class="toc-number">1.4.</span> <span class="toc-text">ls -l 结果说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls_实例"><span class="toc-number">1.5.</span> <span class="toc-text">ls 实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#file_命令"><span class="toc-number">2.</span> <span class="toc-text">file 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#file_语法"><span class="toc-number">2.1.</span> <span class="toc-text">file 语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例"><span class="toc-number">2.2.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#less_命令"><span class="toc-number">3.</span> <span class="toc-text">less 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#less_用法"><span class="toc-number">3.1.</span> <span class="toc-text">less 用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档快捷操作"><span class="toc-number">3.2.</span> <span class="toc-text">文档快捷操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例-1"><span class="toc-number">3.3.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展"><span class="toc-number">4.</span> <span class="toc-text">扩展</span></a></li></ol>
+		</div>
+		
+		<p>在《Linux命令行大全》一书中，第3章名称是 Linux 系统。概念太大，不过该节内容却是 Linux 系统最为核心的基础——查看 Linux 系统。</p>
+<a id="more"></a>
+<p><img src="../../../../img/Linux查看目标细分.png" alt="查看目标细分"></p>
+<h2 id="ls_命令">ls 命令</h2><p>显示目录自身信息或目录中内容信息，也可只显示指定文件信息</p>
+<h3 id="ls">ls</h3><p>等同于 “ ls . “，显示当前目录下目录或文件名称，一般用空格隔开</p>
+<h3 id="ls_若干目录路径">ls 若干目录路径</h3><p>显示指定目录下目录或文件名称，可有多个目录，目录间用空格隔开</p>
+<h3 id="ls_参数">ls 参数</h3><pre><code>-<span class="ruby">a 一般不显示隐藏文件（以<span class="string">"."</span>开头），带上此参数即显示
+</span>-<span class="ruby"><span class="constant">F</span> 此项在列出的名称后加上类型指示符，目录是<span class="string">"/"</span>，文件无符号
+</span>-<span class="ruby">h 文件大小以可读方式（如 <span class="constant">MB</span>）显示，而非字节数
+</span>-<span class="ruby">d 与 -l 结合使用，显示目录信息而非目录下内容；单独使用仅显示目录名
+</span>-<span class="ruby">l 长格式显示目录或文件信息，最为常用的参数
+</span>-<span class="ruby">r 以相反顺序显示结果；无此参数，默认按字母升序排列
+</span>-<span class="ruby"><span class="constant">S</span> 按文件大小排序，从上到下依次降低
+</span>-<span class="ruby">t 按文件修改时间排序，最新的位于首位</span>
+</code></pre><h3 id="ls_-l_结果说明">ls -l 结果说明</h3><p>显示目录内容时，出现“总用量”一项，表示该目录下所有文件所占的文件块的总数</p>
+<p>第 1 列：-rwxrw-r— 首位表示文件类型（文件 - 、目录 d 或链接 l），其后还有9位，每3位一组（分别为读权限、写权限、执行权限），依次表示该项所有者、该项所在组成员、其他所有人的访问权限</p>
+<p>第 2 列：1 数字表示文件硬链接数目</p>
+<p>第 3 列：root 表示文件所有者</p>
+<p>第 4 列：root 表示文件所有者所属组</p>
+<p>第 5 列：4096 数字表示文件大小（字节数），若使用 -h 参数，则可能是 K，M 等</p>
+<p>第 6 列：1月  8 00:47 表示文件最后修改时间</p>
+<p>第 7 列：下载 文件名称，若使用 -F 参数，则目录或链接的名称后有类型指示符</p>
+<h3 id="ls_实例">ls 实例</h3><p>显示目录信息</p>
+<pre><code>ls -<span class="tag">dl</span> /usr/bin
+</code></pre><p>显示多个目录下内容</p>
+<pre><code><span class="keyword">ls</span> -<span class="keyword">l</span> ~ /usr/bin
+</code></pre><p>显示文件信息</p>
+<pre><code><span class="keyword">ls</span> -ld /usr/bin/<span class="keyword">zip</span>
+</code></pre><p>或</p>
+<pre><code><span class="keyword">ls</span> -<span class="keyword">l</span> /usr/bin/<span class="keyword">zip</span>
+</code></pre><h2 id="file_命令">file 命令</h2><h3 id="file_语法">file 语法</h3><pre><code><span class="type">file</span> filePath[ filePath2 ...]
+</code></pre><p>file 判定文件类型，其后可追加多个路径，空格隔开<br>单独使用 file，显示 file 详细语法，并不判断当前目录类型</p>
+<h3 id="实例">实例</h3><p>显示文件类型</p>
+<pre><code><span class="keyword">file</span>  <span class="regexp">/usr/</span>bin<span class="regexp">/zip</span>
+</code></pre><h2 id="less_命令">less 命令</h2><h3 id="less_用法">less 用法</h3><pre><code><span class="operator">less</span> filePath[ filePath2 ...]
+</code></pre><p>less 判定文件内容，其后可追加多个文件路径，空格隔开。后面跟目录，会提示“这是一个目录”</p>
+<h3 id="文档快捷操作">文档快捷操作</h3><p>使用 less 命令后，命令行显示文件内容。<br>若文件过大，当前屏幕不能全部展示。有多种快捷方式来加快文档查看、编辑和修改。</p>
+<pre><code>PAGE UP 或 b ： 后翻一页
+PAGE Down 或 Spacebar ： 前翻一页
+向上箭头键 ： 向上一行
+向下箭头键 ： 向下一行
+<span class="keyword">G</span> 即 Shift + <span class="keyword">g</span>： 跳转到文本文件的末尾
+<span class="keyword">g</span> ： 跳转到文本文件的开头
+/characters : 向前查找指定的字符串
+<span class="keyword">n</span> ： 向前查找下一个出现的字符串，必须在 /characters 之后使用
+<span class="keyword">h</span> ： 显示帮助屏幕
+q ： 退出less
+</code></pre><h3 id="实例-1">实例</h3><p>显示文件内容</p>
+<pre><code>less /<span class="built_in">var</span>/<span class="keyword">log</span>/syslog<span class="built_in">.1</span>
+</code></pre><h2 id="扩展">扩展</h2><p>ls，file，less 均能使用通配符，或者各种扩展。</p>
+<p>这种做法能够简化对多个文件的操作。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Linux/">Linux</a><a href="/tags/Linux命令行大全/">Linux命令行大全</a><a href="/tags/Unix/">Unix</a><a href="/tags/book/">book</a><a href="/tags/command/">command</a><a href="/tags/notes/">notes</a><a href="/tags/书籍/">书籍</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2015/01/19/系列Linux命令行大全（三）/" data-title="系列Linux命令行大全（三） | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/01/19/关于如何将-Linux-时间与网路同步/" title="关于如何将 Linux 时间与网路同步">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于如何将 Linux 时间与网路同步</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/01/06/关于Linux中Oracle的安装流程及其问题（仅单实例）/"  title="关于Linux中Oracle的安装流程及其问题（仅单实例）">
+ <strong>NEXT:</strong><br/> 
+ <span>关于Linux中Oracle的安装流程及其问题（仅单实例）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ls_命令"><span class="toc-number">1.</span> <span class="toc-text">ls 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ls"><span class="toc-number">1.1.</span> <span class="toc-text">ls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls_若干目录路径"><span class="toc-number">1.2.</span> <span class="toc-text">ls 若干目录路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls_参数"><span class="toc-number">1.3.</span> <span class="toc-text">ls 参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls_-l_结果说明"><span class="toc-number">1.4.</span> <span class="toc-text">ls -l 结果说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls_实例"><span class="toc-number">1.5.</span> <span class="toc-text">ls 实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#file_命令"><span class="toc-number">2.</span> <span class="toc-text">file 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#file_语法"><span class="toc-number">2.1.</span> <span class="toc-text">file 语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例"><span class="toc-number">2.2.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#less_命令"><span class="toc-number">3.</span> <span class="toc-text">less 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#less_用法"><span class="toc-number">3.1.</span> <span class="toc-text">less 用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文档快捷操作"><span class="toc-number">3.2.</span> <span class="toc-text">文档快捷操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例-1"><span class="toc-number">3.3.</span> <span class="toc-text">实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展"><span class="toc-number">4.</span> <span class="toc-text">扩展</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

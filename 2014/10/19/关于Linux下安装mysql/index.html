@@ -1,0 +1,393 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>关于Linux下安装mysql | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="当前 mysql 官网的安装教程，指明可以使用 yum 方式">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/10/19/关于Linux下安装mysql/" title="关于Linux下安装mysql" itemprop="url">关于Linux下安装mysql</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-10-19T12:10:47.000Z" itemprop="datePublished">Oct 19 2014</time>
+    更新日期:<time datetime="2014-10-19T14:09:32.000Z" itemprop="dateModified">Oct 19 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL_YUM_Repository"><span class="toc-number">1.</span> <span class="toc-text">MySQL YUM Repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看Linux版本，下载对应版本_MySQL_Yum_库"><span class="toc-number">2.</span> <span class="toc-text">查看Linux版本，下载对应版本 MySQL Yum 库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装_MySQL_Yum_Repository"><span class="toc-number">3.</span> <span class="toc-text">安装 MySQL Yum Repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置_MySQL_Yum_Repository"><span class="toc-number">4.</span> <span class="toc-text">设置 MySQL Yum Repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装_MySQL_Server"><span class="toc-number">5.</span> <span class="toc-text">安装 MySQL Server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动_MySQL"><span class="toc-number">6.</span> <span class="toc-text">启动 MySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置超级用户密码"><span class="toc-number">7.</span> <span class="toc-text">设置超级用户密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">8.</span> <span class="toc-text">参考</span></a></li></ol>
+		</div>
+		
+		<p>当前 mysql 官网的安装教程，指明可以使用 yum 方式</p>
+<a id="more"></a>
+<h2 id="MySQL_YUM_Repository">MySQL YUM Repository</h2><p>MySQL Yum 库提供 MySQL 客户端、服务器及相关组件的 rpm 安装包</p>
+<p>该库也可以升级和替换已安装（来自 Linux 原生软件源）的第三方 MySQL ，如果有的话</p>
+<p>支持的Linux平台：</p>
+<blockquote>
+<ul>
+<li>基于 EL5，EL6，EL7的 Linux 平台，例如相关版本的 Red Hat，CentOS，Oracle Linux</li>
+<li>Fedora 19 and 20</li>
+</ul>
+</blockquote>
+<h2 id="查看Linux版本，下载对应版本_MySQL_Yum_库">查看Linux版本，下载对应版本 MySQL Yum 库</h2><pre><code>[root<span class="property">@localhost</span> ~]<span class="comment"># uname -r</span>
+<span class="number">3.10</span>.0-<span class="number">123.</span>el7.x86_64
+</code></pre><p>打开网址，<a href="http://dev.mysql.com/downloads/repo/yum/" target="_blank" rel="external">http://dev.mysql.com/downloads/repo/yum/</a></p>
+<p>确定 Linux 版本对应的 MySQL Yum 库的下载地址</p>
+<p>使用 wget 下载</p>
+<h2 id="安装_MySQL_Yum_Repository">安装 MySQL Yum Repository</h2><pre><code>[root<span class="keyword">@localhost</span> ~]# rpm -Uvh platform-and-<span class="keyword">version</span>-specific-<span class="keyword">package</span>-name.rpm
+</code></pre><h2 id="设置_MySQL_Yum_Repository">设置 MySQL Yum Repository</h2><p>修改文件 /etc/yum.repos.d/mysql-community.repo， 来确定使用的 MySQL 版本</p>
+<pre><code><span class="comment"># Enable to use MySQL 5.6</span>
+[mysql56-community]
+<span class="constant">name</span>=MySQL 5.6 Community Server
+<span class="constant">baseurl</span>=//repo.mysql.com/yum/mysql-5.6-community/el/5/$basearch/
+<span class="constant">enabled</span>=1
+<span class="constant">gpgcheck</span>=1
+<span class="constant">gpgkey</span>=file:/etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+</code></pre><p>上述内容每个 MySQL 版本都有</p>
+<p>若要使用该版本 MySQL， 则将 enable 设置为 1</p>
+<p>注意，其他版本都要设为 0</p>
+<p>设置完成后，使用以下命令查看使用的 MySQL 版本</p>
+<pre><code>yum repolist enabled <span class="string">| grep mysql</span>
+</code></pre><h2 id="安装_MySQL_Server">安装 MySQL Server</h2><pre><code>yum <span class="operator"><span class="keyword">install</span> mysql-community-<span class="keyword">server</span></span>
+</code></pre><h2 id="启动_MySQL">启动 MySQL</h2><p>启动</p>
+<pre><code><span class="keyword">service</span> mysqld <span class="literal">start</span>
+</code></pre><p>查看状态</p>
+<pre><code><span class="keyword">service</span> mysqld <span class="literal">status</span>
+</code></pre><p>停止</p>
+<pre><code>sudo <span class="keyword">service</span> mysqld <span class="literal">stop</span>
+</code></pre><h2 id="设置超级用户密码">设置超级用户密码</h2><p>安装后，超级用户是没有密码的</p>
+<p>这导致只要在本机，任何人都可以登陆 MySQL</p>
+<p>考虑到安全性，设置密码</p>
+<pre><code>[root@localhost ~]<span class="array"># mysql </span>-u root
+mysql&gt; <span class="keyword">SET</span> PASSWORD <span class="keyword">FOR</span> <span class="string">'root'</span>@<span class="string">'localhost'</span> = PASSWORD(<span class="string">'newpwd'</span>);
+mysql&gt; <span class="keyword">SET</span> PASSWORD <span class="keyword">FOR</span> <span class="string">'root'</span>@<span class="string">'127.0.0.1'</span> = PASSWORD(<span class="string">'newpwd'</span>);
+mysql&gt; <span class="keyword">SET</span> PASSWORD <span class="keyword">FOR</span> <span class="string">'root'</span>@<span class="string">'::1'</span> = PASSWORD(<span class="string">'newpwd'</span>);
+mysql&gt; <span class="keyword">SET</span> PASSWORD <span class="keyword">FOR</span> <span class="string">'root'</span>@<span class="string">'host_name'</span> = PASSWORD(<span class="string">'newpwd'</span>);
+</code></pre><p>或者</p>
+<pre><code><span class="literal">shell</span>&gt; mysql -u <span class="literal">root</span>
+mysql&gt; <span class="constant">U</span>PDATE mysql.<span class="keyword">user</span> <span class="constant">S</span>ET <span class="constant">Password</span> = <span class="constant">P</span>ASSWORD(<span class="string">'newpwd'</span>) <span class="constant">W</span>HERE <span class="constant">User</span> = <span class="string">'root'</span>;
+mysql&gt; <span class="constant">F</span>LUSH <span class="constant">P</span>RIVILEGES;
+</code></pre><p>查看 mysql 密码设置情况</p>
+<pre><code>mysql &gt; SELECT <span class="built_ins">User</span>,Host, Password <span class="built_ins">FROM</span> mysql.<span class="built_ins">user</span>;
+</code></pre><p>更多用户的权限设置见：<a href="http://dev.mysql.com/doc/refman/5.6/en/default-privileges.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.6/en/default-privileges.html</a></p>
+<h2 id="参考">参考</h2><p>MySQL 5.6版本，<a href="http://dev.mysql.com/doc/refman/5.6/en/linux-installation-yum-repo.html" target="_blank" rel="external">Installing MySQL on Linux Using the MySQL Yum Repository</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/install/">install</a><a href="/tags/linux/">linux</a><a href="/tags/mysql/">mysql</a><a href="/tags/repository/">repository</a><a href="/tags/yum/">yum</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/10/19/关于Linux下安装mysql/" data-title="关于Linux下安装mysql | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/10/23/关于在Linux中安装tomcat/" title="关于在Linux中安装tomcat">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于在Linux中安装tomcat</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/10/18/关于使用SecureCRT上传下载文件/"  title="关于使用SecureCRT上传下载（发送接收）文件">
+ <strong>NEXT:</strong><br/> 
+ <span>关于使用SecureCRT上传下载（发送接收）文件
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL_YUM_Repository"><span class="toc-number">1.</span> <span class="toc-text">MySQL YUM Repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看Linux版本，下载对应版本_MySQL_Yum_库"><span class="toc-number">2.</span> <span class="toc-text">查看Linux版本，下载对应版本 MySQL Yum 库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装_MySQL_Yum_Repository"><span class="toc-number">3.</span> <span class="toc-text">安装 MySQL Yum Repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置_MySQL_Yum_Repository"><span class="toc-number">4.</span> <span class="toc-text">设置 MySQL Yum Repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装_MySQL_Server"><span class="toc-number">5.</span> <span class="toc-text">安装 MySQL Server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动_MySQL"><span class="toc-number">6.</span> <span class="toc-text">启动 MySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置超级用户密码"><span class="toc-number">7.</span> <span class="toc-text">设置超级用户密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">8.</span> <span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

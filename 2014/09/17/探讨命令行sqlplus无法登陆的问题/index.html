@@ -1,0 +1,361 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>探讨命令行sqlplus无法登陆的问题 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="命令行 sqlplus 无法登陆，常常是用户名/密码错误、监听配置错误或未启动、数据库服务名丢失等等原因">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/09/17/探讨命令行sqlplus无法登陆的问题/" title="探讨命令行sqlplus无法登陆的问题" itemprop="url">探讨命令行sqlplus无法登陆的问题</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-09-17T07:49:31.000Z" itemprop="datePublished">Sep 17 2014</time>
+    更新日期:<time datetime="2014-09-17T08:04:39.000Z" itemprop="dateModified">Sep 17 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用户名/密码错误"><span class="toc-number">1.</span> <span class="toc-text">用户名/密码错误</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监听问题"><span class="toc-number">2.</span> <span class="toc-text">监听问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库服务"><span class="toc-number">3.</span> <span class="toc-text">数据库服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境变量问题"><span class="toc-number">4.</span> <span class="toc-text">环境变量问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库实例问题"><span class="toc-number">5.</span> <span class="toc-text">数据库实例问题</span></a></li></ol>
+		</div>
+		
+		<p>命令行 sqlplus 无法登陆，常常是用户名/密码错误、监听配置错误或未启动、数据库服务名丢失等等原因<br><a id="more"></a></p>
+<h2 id="用户名/密码错误">用户名/密码错误</h2><p>找到自己设的密码</p>
+<p>这全靠自己创建数据库实例时，备份或记住相关信息</p>
+<p>若最后没找到，则删除该实例，重新配置一个数据库实例</p>
+<p>注意，是数据库<strong>实例</strong>，而非整个 Oracle</p>
+<h2 id="监听问题">监听问题</h2><p>监听服务，监听指定网址和指定端口的 Oracle 服务</p>
+<p>若是此类问题，则重新配置监听</p>
+<p>重新配置，使用 Oracle 安装组件之一： Net Configuration Assistant</p>
+<p>配置时，注意监听名称和端口，要与数据库实例一致</p>
+<h2 id="数据库服务">数据库服务</h2><p>找不到指定服务，要使用 Oracle 安装组件之一重新配置： Net Configuration Assistant</p>
+<p>注意，监听的网址、端口和服务名</p>
+<h2 id="环境变量问题">环境变量问题</h2><p>一般情况下，一个系统安装一个 Oracle</p>
+<p>则系统变量 path 中，只有一个 Oracle 的相关路径</p>
+<p>但安装两个以上的 Oracle， 则注意要设成指定数据库的相关路径</p>
+<p>否则，会报 protocol adapter errror</p>
+<h2 id="数据库实例问题">数据库实例问题</h2><p>一般情况下，是因为安装 Oracle 失败 或 配置 Oracle 实例造成错误</p>
+<p>1、前者，重装 Oracle ，因为排查可能花很多时间（除非能马上找到问题原因，且能修复）</p>
+<p>重装前提：断网，关防火墙，关杀毒软件</p>
+<p>另个人见解：关其他软件，且不做其他操作，去休息或看实体书，别碰电脑</p>
+<p>2、后者，重新配置 Oracle 实例</p>
+<p>注意，备份设定的密码，字符集，用途等</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/error/">error</a><a href="/tags/fail/">fail</a><a href="/tags/listener/">listener</a><a href="/tags/login/">login</a><a href="/tags/service/">service</a><a href="/tags/sqlplus/">sqlplus</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/09/17/探讨命令行sqlplus无法登陆的问题/" data-title="探讨命令行sqlplus无法登陆的问题 | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/09/27/系列之-JDBC-of-Java-Tutorial-二/" title="系列之 JDBC of Java Tutorial(二)">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  系列之 JDBC of Java Tutorial(二)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/09/13/关于程序使用人员的漫谈/"  title="关于程序的使用人员">
+ <strong>NEXT:</strong><br/> 
+ <span>关于程序的使用人员
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#用户名/密码错误"><span class="toc-number">1.</span> <span class="toc-text">用户名/密码错误</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监听问题"><span class="toc-number">2.</span> <span class="toc-text">监听问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库服务"><span class="toc-number">3.</span> <span class="toc-text">数据库服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境变量问题"><span class="toc-number">4.</span> <span class="toc-text">环境变量问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库实例问题"><span class="toc-number">5.</span> <span class="toc-text">数据库实例问题</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

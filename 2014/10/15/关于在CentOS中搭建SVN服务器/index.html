@@ -1,0 +1,453 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>关于在CentOS中搭建SVN服务器 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="简单介绍如何在虚拟机 CentOS 中，搭建 SVN 服务器">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/10/15/关于在CentOS中搭建SVN服务器/" title="关于在CentOS中搭建SVN服务器" itemprop="url">关于在CentOS中搭建SVN服务器</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-10-15T08:08:43.000Z" itemprop="datePublished">Oct 15 2014</time>
+    更新日期:<time datetime="2014-11-02T11:39:31.000Z" itemprop="dateModified">Nov 2 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#软件版本信息"><span class="toc-number">1.</span> <span class="toc-text">软件版本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件安装"><span class="toc-number">2.</span> <span class="toc-text">软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#subversion"><span class="toc-number">2.1.</span> <span class="toc-text">subversion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wget"><span class="toc-number">2.2.</span> <span class="toc-text">Wget</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java"><span class="toc-number">2.3.</span> <span class="toc-text">java</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#subversion-1"><span class="toc-number">3.1.</span> <span class="toc-text">subversion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java-1"><span class="toc-number">3.2.</span> <span class="toc-text">java</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">4.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟机_CentOS"><span class="toc-number">4.1.</span> <span class="toc-text">虚拟机 CentOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端"><span class="toc-number">4.2.</span> <span class="toc-text">客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见问题"><span class="toc-number">5.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS_7_中命令找不到"><span class="toc-number">5.1.</span> <span class="toc-text">CentOS 7 中命令找不到</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#访问_svn_服务器，无应答"><span class="toc-number">5.2.</span> <span class="toc-text">访问 svn 服务器，无应答</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>简单介绍如何在虚拟机 CentOS 中，搭建 SVN 服务器</p>
+<a id="more"></a>
+<h2 id="软件版本信息">软件版本信息</h2><p>Vmware 10.0.0 build-1295980</p>
+<p>CentOS 7.0-1406-x64</p>
+<p>Java 1.7.0_67_x64</p>
+<p>Suberverson 1.7.14</p>
+<p>GNU Wget 1.14</p>
+<h2 id="软件安装">软件安装</h2><h3 id="subversion">subversion</h3><pre><code>yum <span class="keyword">install</span> subversion
+</code></pre><p>需要选择时，选第一个选项</p>
+<h3 id="Wget">Wget</h3><p>用于下载 Java </p>
+<pre><code>wget --<span class="keyword">no</span>-cookies --<span class="keyword">no</span>-check-certificate --header <span class="string">"Cookie: gpw_e24=http<span class="variable">%3A</span><span class="variable">%2F</span><span class="variable">%2Fwww</span>.oracle.com<span class="variable">%2F</span>; 
+oraclelicense=accept-securebackup-cookie"</span> <span class="string">"http://download.oracle.com/otn-pub/java/jdk/7u67-b01/jdk-7u67-linux-x64.rpm"</span>
+</code></pre><p>整个命令是一行，复制粘贴时要注意</p>
+<p>其中，最后的双引号中是，自己所需 jdk 的下载地址（本文下载的是 rpm 格式的 jdk 1.7.0_67 版本）</p>
+<p>附：进一步的内容见 <a href="http://lovelace.blog.51cto.com/1028430/1429832" target="_blank" rel="external">oracle官网下载老版本jdk + 如何命令行下wget下载jdk</a>，作者 lovelace521</p>
+<h3 id="java">java</h3><p>1、安装oracle Java前，先确保当前系统中，无内置 jdk（即 OpenJDK）</p>
+<pre><code>java -<span class="property">version</span>
+</code></pre><p>若未输出 java 版本，则说明当前系统无内置 jdk</p>
+<p>2、若有，则先卸载</p>
+<pre><code>[root<span class="property">@localhost</span> ~]<span class="comment"># rpm -qa | grep java</span>
+tzdata-java-<span class="number">2012</span>c-<span class="number">1.</span>el6.noarch
+java-<span class="number">1.7</span>.0-openjdk-<span class="number">1.7</span>.0.45-<span class="number">1.45</span>.1.11.1.el6.x86_64
+</code></pre><p>卸载OpenJDK，执行以下操作：</p>
+<pre><code>[root<span class="property">@localhost</span> ~]<span class="comment"># rpm -e --nodeps tzdata-java-2012c-1.el6.noarch</span>
+[root<span class="property">@localhost</span> ~]<span class="comment"># rpm -e --nodeps java-1.7.0-openjdk-1.7.0.45-1.45.1.11.1.el6.x86_64</span>
+</code></pre><p>3、安装 oracle java<br>用于运行编辑的 java 文件</p>
+<p>若未指定参数，wget 下载的文件位于当前文件夹</p>
+<p>将 jdk 移动到适当目录</p>
+<p>执行以下命令：</p>
+<pre><code><span class="title">rpm</span> -ivh jdk-<span class="number">7</span>-linux-i586.rpm
+</code></pre><p>JDK默认安装在/usr/java中</p>
+<p>验证安装</p>
+<pre><code>java -<span class="property">version</span>
+</code></pre><h2 id="配置">配置</h2><h3 id="subversion-1">subversion</h3><p>1、建立 SVN 的根目录</p>
+<pre><code>[root<span class="property">@vm</span>-moodle ~]<span class="comment"># mkdir -p /opt/svn/   </span>
+</code></pre><p>2、建立一个数据仓库：</p>
+<pre><code>[root<span class="annotation">@vm</span>-moodle ~]# mkdir -p <span class="regexp">/opt/</span>svn<span class="regexp">/edu/</span>  
+[root<span class="annotation">@vm</span>-moodle ~]# svnadmin create opt<span class="regexp">/svn/</span>edu/  
+</code></pre><p>3、修改配置文件<br>查看数据仓库文件目录</p>
+<pre><code>[<span class="literal">root</span>@vm-moodle ~]<span class="comment"># cd /opt/svn/edu/conf/  </span>
+[<span class="literal">root</span>@vm-moodle conf]<span class="comment"># ll  </span>
+总计 <span class="number">24</span>  
+-rw-r--r-- <span class="number">1</span> <span class="literal">root</span> <span class="literal">root</span> <span class="number">710</span> <span class="number">10</span>-<span class="number">25</span> 09:<span class="number">40</span> authz  
+-rw-r--r-- <span class="number">1</span> <span class="literal">root</span> <span class="literal">root</span> <span class="number">325</span> <span class="number">10</span>-<span class="number">25</span> 09:<span class="number">38</span> passwd  
+-rw-r--r-- <span class="number">1</span> <span class="literal">root</span> <span class="literal">root</span> <span class="number">1449</span> <span class="number">10</span>-<span class="number">25</span> 09:<span class="number">36</span> svnserve.conf  
+</code></pre><p>修改服务配置</p>
+<pre><code>[root@vm-moodle conf]<span class="comment"># vi svnserve.conf  </span>
+[general]  
+<span class="variable">anon-access =</span> none    <span class="comment">#不允许匿名访问  </span>
+<span class="variable">auth-access =</span> write   <span class="comment">#认证用户可写  </span>
+<span class="variable">password-db =</span> passwd  <span class="comment">#密码文件  </span>
+<span class="variable">authz-db =</span> authz      <span class="comment">#用户验证文件        </span>
+[root@vm-moodle conf]<span class="comment"># vi authz  </span>
+[edu:/]  
+<span class="variable">hansy =</span> rw  
+</code></pre><p>给edu仓库添加一个用户，权限为可写</p>
+<pre><code>[root<span class="property">@vm</span>-moodle conf]<span class="comment"># vi passwd  </span>
+hansy = <span class="number">87827192</span>  
+</code></pre><p>密码可以是加密密码，也可以是明文，根据前面的配置来决定<br>注意，<strong>配置内容前不能有空格</strong></p>
+<h3 id="java-1">java</h3><p>修改系统环境变量文件</p>
+<pre><code><span class="keyword">vi</span> + /etc/<span class="keyword">profile</span>
+</code></pre><p>向文件里面追加以下内容：</p>
+<pre><code>JAVA_HOME=/usr/java/jdk1.<span class="number">7.0</span>_67
+JRE_HOME=/usr/java/jdk1.<span class="number">7.0</span>_67/jre
+PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JRE_HOME</span>/bin
+CLASSPATH=:<span class="variable">$JAVA_HOME</span>/lib/<span class="tag">dt</span><span class="class">.jar</span>:<span class="variable">$JAVA_HOME</span>/lib/tools<span class="class">.jar</span>:<span class="variable">$JRE_HOME</span>/lib
+export JAVA_HOME JRE_HOME PATH CLASSPATH
+</code></pre><p>使修改生效</p>
+<pre><code>[root@localhost ~]# <span class="keyword">source</span> <span class="regexp">/etc/</span>profile   <span class="comment">//使修改立即生效</span>
+</code></pre><p>查看系统环境状态</p>
+<pre><code>[root<span class="annotation">@localhost</span> ~]# echo $PATH
+<span class="regexp">/usr/</span>lib<span class="regexp">/qt-3.3/</span><span class="string">bin:</span><span class="regexp">/usr/</span>local<span class="regexp">/bin:/</span><span class="string">bin:</span><span class="regexp">/usr/</span><span class="string">bin:</span><span class="regexp">/usr/</span>local<span class="regexp">/sbin:/</span>usr<span class="regexp">/sbin:/</span><span class="string">sbin:</span><span class="regexp">/usr/</span>java<span class="regexp">/jdk1.7.0_45/</span><span class="string">bin:</span>
+<span class="regexp">/usr/</span>java<span class="regexp">/jdk1.7.0_45/</span>jre<span class="regexp">/bin:/</span>home<span class="regexp">/ckb/</span>bin
+</code></pre><h2 id="使用">使用</h2><h3 id="虚拟机_CentOS">虚拟机 CentOS</h3><p>1、 启动SVN 服务，并指定 SVN 的根目录</p>
+<pre><code>[root<span class="property">@vm</span>-moodle ~]<span class="comment"># svnserve -d -r /opt/svn/   </span>
+</code></pre><p>默认 svn 服务使用端口 3690，若需指定，在命令后追加 “ —listen-port 指定端口”</p>
+<p>2、查看服务是否正常起来</p>
+<pre><code>[root<span class="variable">@vm</span>-moodle ~]<span class="comment"># netstat -tunlp | grep svn  </span>
+tcp <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span><span class="symbol">:</span><span class="number">3690</span> <span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span><span class="symbol">:*</span>   
+<span class="constant">EN </span><span class="number">3970</span>/svnserve  
+</code></pre><p>3、导入数据到svn仓库</p>
+<pre><code>[root<span class="annotation">@vm</span>-moodle ~]# svn <span class="keyword">import</span> Hello <span class="string">file:</span><span class="comment">///opt/svn/edu/project  -m "Initial import" </span>
+</code></pre><p>其中，Hello为当前目录下的一个文件夹</p>
+<h3 id="客户端">客户端</h3><p>1、在客户端或虚拟机外的主机上，安装 TortoiSVN</p>
+<p>2、TortoiseSVN — Repo-browser，输入 svn://虚拟机 CentOS 的 IP 地址</p>
+<h2 id="常见问题">常见问题</h2><h3 id="CentOS_7_中命令找不到">CentOS 7 中命令找不到</h3><p>CentOS 7 系统摒弃部分指令，有</p>
+<pre><code>netstat， 改为 <span class="literal">ss</span>
+ifconfig， 改为 <span class="literal">ip</span>
+iptables， 改为 systemctl
+</code></pre><p>其中，若想继续使用 iptables，按以下步骤操作</p>
+<p>1、Disable Firewalld Service.</p>
+<pre><code>[root<span class="property">@rhel</span>-centos7-tejas-barot-linux ~]<span class="comment"># systemctl mask firewalld</span>
+</code></pre><p>2、Stop Firewalld Service.</p>
+<pre><code>[root<span class="property">@rhel</span>-centos7-tejas-barot-linux ~]<span class="comment"># systemctl stop firewalld</span>
+</code></pre><p>3、Install iptables service related packages.</p>
+<pre><code>[root<span class="property">@rhel</span>-centos7-tejas-barot-linux ~]<span class="comment"># yum -y install iptables-services</span>
+</code></pre><p>4、Make sure service starts at boot:</p>
+<pre><code>[root<span class="property">@rhel</span>-centos7-tejas-barot-linux ~]<span class="comment"># systemctl enable iptables</span>
+</code></pre><p>If you do not want ip6tables, You can skip following command</p>
+<pre><code>[root<span class="property">@rhel</span>-centos7-tejas-barot-linux ~]<span class="comment"># systemctl enable ip6tables</span>
+</code></pre><p>5、Now, Finally Let’s start the iptables services.</p>
+<pre><code>[root<span class="property">@rhel</span>-centos7-tejas-barot-linux ~]<span class="comment"># systemctl start iptables</span>
+</code></pre><p>6、If you do not want ip6tables, You can skip following command.</p>
+<pre><code>[root<span class="property">@rhel</span>-centos7-tejas-barot-linux ~]<span class="comment"># systemctl start ip6tables</span>
+</code></pre><p>附：详见<a href="http://www.tuicool.com/articles/YVzIzm" target="_blank" rel="external">RHEL 7 / CentOS 7 : Disable Firewalld and use iptables</a></p>
+<h3 id="访问_svn_服务器，无应答">访问 svn 服务器，无应答</h3><p>1、SVN 配置文件错误<br>仔细检查，排错</p>
+<p>2、SVN 服务端口未开放<br>查看 svnserve 服务是否启动</p>
+<pre><code>[root<span class="property">@vm</span>-moodle ~]<span class="comment"># ss -ntlp</span>
+</code></pre><p>若已启动，设置防火墙，开放服务相应端口</p>
+<pre><code>[root<span class="property">@vm</span>-moodle ~]<span class="comment"># iptables -I INPUT -p tcp --dport 3690 -j ACCEPT  #开放3690端口</span>
+[root<span class="property">@vm</span>-moodle ~]<span class="comment"># service iptables save                  #保存配置，非常重要 </span>
+[root<span class="property">@vm</span>-moodle ~]<span class="comment"># service iptables restart  　# 重启防火墙服务</span>
+[root<span class="property">@vm</span>-moodle ~]<span class="comment"># service iptables status  　# 查看状态</span>
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/CentOS/">CentOS</a><a href="/tags/SVN/">SVN</a><a href="/tags/checkout/">checkout</a><a href="/tags/subversion/">subversion</a><a href="/tags/svnserve/">svnserve</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/10/15/关于在CentOS中搭建SVN服务器/" data-title="关于在CentOS中搭建SVN服务器 | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/10/18/关于使用SecureCRT上传下载文件/" title="关于使用SecureCRT上传下载（发送接收）文件">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于使用SecureCRT上传下载（发送接收）文件</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/10/09/探讨软件功能流过程中的风险/"  title="探讨软件功能流过程中的风险">
+ <strong>NEXT:</strong><br/> 
+ <span>探讨软件功能流过程中的风险
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#软件版本信息"><span class="toc-number">1.</span> <span class="toc-text">软件版本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件安装"><span class="toc-number">2.</span> <span class="toc-text">软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#subversion"><span class="toc-number">2.1.</span> <span class="toc-text">subversion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Wget"><span class="toc-number">2.2.</span> <span class="toc-text">Wget</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java"><span class="toc-number">2.3.</span> <span class="toc-text">java</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#subversion-1"><span class="toc-number">3.1.</span> <span class="toc-text">subversion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java-1"><span class="toc-number">3.2.</span> <span class="toc-text">java</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">4.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟机_CentOS"><span class="toc-number">4.1.</span> <span class="toc-text">虚拟机 CentOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端"><span class="toc-number">4.2.</span> <span class="toc-text">客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见问题"><span class="toc-number">5.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS_7_中命令找不到"><span class="toc-number">5.1.</span> <span class="toc-text">CentOS 7 中命令找不到</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#访问_svn_服务器，无应答"><span class="toc-number">5.2.</span> <span class="toc-text">访问 svn 服务器，无应答</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>

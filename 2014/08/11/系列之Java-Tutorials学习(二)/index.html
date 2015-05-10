@@ -1,0 +1,395 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>系列之Java Tutorials学习(二) | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="welley">
+    
+    <meta name="description" content="对于任何编程语言，都最常见的入门应用： Hello World">
+    
+    
+    
+    
+    <link rel="alternative" href="http://winspread.github.io/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto">to study , to obtain</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:winspread.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/08/11/系列之Java-Tutorials学习(二)/" title="系列之Java Tutorials学习(二)" itemprop="url">系列之Java Tutorials学习(二)</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://winspread.github.io" title="welley">welley</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-11T13:41:57.000Z" itemprop="datePublished">Aug 11 2014</time>
+    更新日期:<time datetime="2014-08-11T16:02:44.000Z" itemprop="dateModified">Aug 12 2014</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NetBeans_和_“Hello_World”"><span class="toc-number">1.</span> <span class="toc-text">NetBeans 和 “Hello World”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建应用"><span class="toc-number">1.1.</span> <span class="toc-text">创建应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows_和_“Hello_World”"><span class="toc-number">2.</span> <span class="toc-text">Windows 和 “Hello World”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建应用-1"><span class="toc-number">2.1.</span> <span class="toc-text">创建应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Solaris_OS_and_Linux_和_“Hello_World”"><span class="toc-number">3.</span> <span class="toc-text">Solaris OS and Linux 和 “Hello World”</span></a></li></ol>
+		</div>
+		
+		<p>对于任何编程语言，都最常见的入门应用： Hello World</p>
+<a id="more"></a>
+<h2 id="NetBeans_和_“Hello_World”">NetBeans 和 “Hello World”</h2><p>编写 Java 程序前，先要准备好：</p>
+<blockquote>
+<ul>
+<li><p>Java SE Development Kit 7<br>Microsoft Windows， Solaris OS 和 Linux ： <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">Java SE 下载列表</a><br>Mac OS X： <a href="https://developer.apple.com/search/index.php?q=java" target="_blank" rel="external">developer.apple.com</a></p>
+</li>
+<li><p>NetBeans IDE<br>适合所有平台 <a href="https://netbeans.org/downloads/index.html" target="_blank" rel="external">NetBeans IDE 下载列表</a></p>
+</li>
+</ul>
+</blockquote>
+<p>附：NetBeans IDE 可以用于多种编程语言，可以选择支持一种语言或所有语言的安装包</p>
+<h3 id="创建应用">创建应用</h3><blockquote>
+<ul>
+<li><p>创建 IDE 项目<br>不用考虑命令行开发中的配置问题</p>
+</li>
+<li><p>编辑源文件<br>创建IDE项目时，一个基本的源文件自动创建</p>
+</li>
+<li><p>编译源文件<br>调用 javac 编译命令，由 .java 生成 .class （字节码文件）<br>JVM 可以解析 .class 文件</p>
+</li>
+<li><p>运行项目<br>调用 java 启动命令，运行项目</p>
+</li>
+</ul>
+</blockquote>
+<p>附：<br>1、源文件是一个编译单元。编译该文件，可生成若干字节码文件</p>
+<p>2、详见<a href="http://docs.oracle.com/javase/tutorial/getStarted/cupojava/netbeans.html" target="_blank" rel="external">Java白皮书</a></p>
+<p>3、<a href="https://netbeans.org/kb/" target="_blank" rel="external">NetBeans 文档</a></p>
+<h2 id="Windows_和_“Hello_World”">Windows 和 “Hello World”</h2><p>若不适用任何 IDE，则需要准备以下工具：</p>
+<blockquote>
+<ul>
+<li><p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">Java SE 下载列表</a></p>
+</li>
+<li><p>任一编辑工具<br>如：NotePad++， JBuilder， EditPlus 和 文本编辑器</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="创建应用-1">创建应用</h3><blockquote>
+<ul>
+<li>创建 .java 文件</li>
+<li>编辑 .java 文件</li>
+<li>命令行 javac 编译 .java</li>
+<li>命令行 java 运行 .class 文件</li>
+</ul>
+</blockquote>
+<p>附：<br>1、详见<a href="file:///E:/program/Java/tutorial/getStarted/cupojava/win32.html" target="_blank" rel="external">Java 白皮书</a></p>
+<h2 id="Solaris_OS_and_Linux_和_“Hello_World”">Solaris OS and Linux 和 “Hello World”</h2><p>类似 Windows 和 “Hello World”</p>
+<p>不同之处：</p>
+<blockquote>
+<ul>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">J2SE 下载列表</a></li>
+<li><a href="http://docs.oracle.com/javase/7/docs/webnotes/install/" target="_blank" rel="external">安装指导</a></li>
+<li>cmd 替换为 terminal 终端</li>
+<li>编辑工具替换为 vi 或 emacs</li>
+</ul>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/jdk/">jdk</a><a href="/tags/study/">study</a><a href="/tags/tutorial/">tutorial</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://winspread.github.io/2014/08/11/系列之Java-Tutorials学习(二)/" data-title="系列之Java Tutorials学习(二) | Hexo" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/08/12/关于Java标识符的规则/" title="关于Java标识符的规则">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于Java标识符的规则</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/08/08/系列之Java-Tutorials学习(一)/"  title="系列之Java Tutorials学习(一)">
+ <strong>NEXT:</strong><br/> 
+ <span>系列之Java Tutorials学习(一)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#NetBeans_和_“Hello_World”"><span class="toc-number">1.</span> <span class="toc-text">NetBeans 和 “Hello World”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建应用"><span class="toc-number">1.1.</span> <span class="toc-text">创建应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows_和_“Hello_World”"><span class="toc-number">2.</span> <span class="toc-text">Windows 和 “Hello World”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建应用-1"><span class="toc-number">2.1.</span> <span class="toc-text">创建应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Solaris_OS_and_Linux_和_“Hello_World”"><span class="toc-number">3.</span> <span class="toc-text">Solaris OS and Linux 和 “Hello World”</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/9种/" title="9种">9种<sup>1</sup></a></li>
+		
+			<li><a href="/tags/API/" title="API">API<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Arrays/" title="Arrays">Arrays<sup>0</sup></a></li>
+		
+			<li><a href="/tags/CentOS/" title="CentOS">CentOS<sup>1</sup></a></li>
+		
+			<li><a href="/tags/CharSequence/" title="CharSequence">CharSequence<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Connection/" title="Connection">Connection<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DataSource/" title="DataSource">DataSource<sup>1</sup></a></li>
+		
+			<li><a href="/tags/DriverManager/" title="DriverManager">DriverManager<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ISO/" title="ISO">ISO<sup>1</sup></a></li>
+		
+			<li><a href="/tags/JDK/" title="JDK">JDK<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+		
+			<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+		
+			<li><a href="/tags/Linux命令行大全/" title="Linux命令行大全">Linux命令行大全<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Middleware/" title="Middleware">Middleware<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Object/" title="Object">Object<sup>0</sup></a></li>
+		
+			<li><a href="/tags/Oracle/" title="Oracle">Oracle<sup>1</sup></a></li>
+		
+			<li><a href="/tags/PreparedStatement/" title="PreparedStatement">PreparedStatement<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ResultSet/" title="ResultSet">ResultSet<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SVN/" title="SVN">SVN<sup>1</sup></a></li>
+		
+			<li><a href="/tags/SecureCRT/" title="SecureCRT">SecureCRT<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://winspread.github.io/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://winspread.github.io" target="_blank" title="welley">welley</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>
